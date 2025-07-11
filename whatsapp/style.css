@@ -1,0 +1,28 @@
+
+/* @dark_mode Dark mode */
+
+@media screen {
+html {
+    -webkit-filter: invert(100%) hue-rotate(180deg) !important;
+    background-color: white;
+}
+img, video, [style*="background-image:"] {
+    -webkit-filter: hue-rotate(-180deg) invert(100%) !important;
+}
+}
+/* @no_animations Reduce animations */
+* {
+  transition: none !important;
+  overscroll-behavior: none;
+}
+
+/* @common Use full page width. */
+
+.app-wrapper-web .two,
+.app-wrapper-web .three
+{
+  height: 100% !important;
+  top: 0 !important;
+  width: 100% !important;
+  margin: 0 0 !important;
+}

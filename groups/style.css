@@ -1,0 +1,39 @@
+
+/* @dark_mode Dark mode */
+
+@media screen {
+html {
+  -webkit-filter: invert(100%) hue-rotate(180deg) !important;
+  background-color: white;
+}
+video {
+  -webkit-filter: hue-rotate(-180deg) invert(100%) !important;
+}
+}
+/* @dark_mode_img ... but keep images uninverted */
+@media screen {
+img:not([src^="https://fonts.gstatic.com/"]), [style*="background-image:"] {
+    -webkit-filter: hue-rotate(-180deg) invert(100%) !important;
+}
+}
+
+/* @no_animations Reduce animations */
+* {
+  transition: none !important;
+  overscroll-behavior: none;
+}
+
+/* Compact conversations list */
+
+[aria-label="Conversations List"] [jsshadow] [jsslot] [data-rowid] {
+  min-height: 0 !important;
+  height: 22px;  /* @1 Line height */
+}
+
+/* script.js @print_layout Print / Conversaion layout button <img src=groups/print-24px.svg width=20> */
+
+:root {
+  --print-font-size: 14px;  /* @1 @font_size Print view font size */
+}
+
+

@@ -1,0 +1,41 @@
+// TODO:: All sites auto off by default? Dark mode auto off?
+
+// TODO: Watch for JSON.stringify(window.settings).length to fit into 8KB limit
+//       Use persistent (context-local?) string dictionary?
+//   let idChars = new Array(26).fill(0).map((_,i) => [String.fromCharCode(65+i), String.fromCharCode(97+i)]).flat(1);
+//   let n2id = n => (n >= idChars.length ? n2id(Math.floor(n / idChars.length)) : "") + idChars[n % idChars.length];
+//   + persistent appendable file of all names?
+
+metrics {
+
+// TODO:: Compact encoding of all settings for metrics
+//   All boolean flags:
+//     btoa(String.fromCharCode(...[...$$(`input[type=checkbox][_setting_id]`)].map((e,i) => e.checked ? (1<<(i % 8)) : 0).reduce((a,e,i) => {!(i%8) && a.push(0); a[a.length-1] += e; return a;}, []))).replace(/=+$/, "")
+//     btoa(String.fromCharCode(...[...$$(`form input[type=checkbox]:not([_master])`)].map((e,i) => e.checked ? (1<<(i % 8)) : 0).reduce((a,e,i) => {!(i%8) && a.push(0); a[a.length-1] += e; return a;}, []))).replace(/=+$/, "")
+//   .. decode:
+//     [...atob("////9////////////38")].map(e => new Array(8).fill(0).map((_,i) => !!(e.charCodeAt(0) & (1 << i)) )).flat(1)
+//   All numerics (0...4097):
+//     let a64=n=>btoa(String.fromCharCode((n % 64)<<2))[0];
+//     [...$$(`input[type=range][_setting_id]`)].map(e => {let v = parseInt(e.value); v = Math.min(v, 64*64-1); return a64(v % 64)+a64(Math.floor(v / 64));}).join("")
+//   .. decode:
+//     let b64=c=>atob(c[0]+"AAA").charCodeAt(0)>>2;
+//     "YAFAAA9BAAAAKAsAFABAGBGBDAVABAaAdAEAEAQAQBCACAPAPASAIDsEaAIAAAKAGAWAOA".match(/../g).map(e => b64(e[0])+b64(e[1])*64)
+//   Snapshot of all checkbox names:
+//     [...$$(`input[type=checkbox][_setting_id]`)].map(e => [e.getAttribute("_site"), e.getAttribute("_section_id"), e.getAttribute("_setting_id"), e.checked])
+//     [...$$(`form input[type=checkbox]:not([_master])`)].map(e => (e.hasAttribute("_module") ? e.getAttribute("_module") : `${e.getAttribute("_site")}.${e.getAttribute("_section_id")}`)+" = "+e.checked)
+//   Snapshot of all numeric fields:
+//     [...$$(`input[type=range][_setting_id]`)].map(e => [e.getAttribute("_site"), e.getAttribute("_section_id"), e.getAttribute("_setting_id"), parseInt(e.value)])
+//     [...$$(`input[type=range][_setting_id]`)].map(e => `${e.getAttribute("_site")}.${e.getAttribute("_section_id")}.${e.getAttribute("_setting_id")} = ${e.value}`)
+
+// TODO:: store a unique "install id" upon install: 0 ... 64*64*64*64*64
+
+// TODO:: metric format: "u#####:s##*#####" - split by ":", first char = WHAT (u=user s=settings), rest = decode.
+//                          settings: version*data   (or use any other separator)
+
+}
+
+// TODO:: Use optional_permissions for all sites
+
+// TODO:: Add "all sites".
+
+

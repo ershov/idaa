@@ -1,0 +1,82 @@
+html, body {
+  font-family: Roboto, Arial;
+  font-size: 12px;
+  background-color: var(--bg);
+  color: var(--fg);
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 0;
+  padding-top: 14px;
+  white-space: nowrap;
+}
+input {
+  background-color: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--b);
+  border-radius: 3px;
+}
+fieldset {
+  margin: 0;
+  border: 1px solid var(--b);
+}
+form ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+form ul li ul {
+  margin: 0 0 0 18px;
+  border: 1px solid var(--b);
+}
+form input[type="checkbox"]:not(:checked) ~ ul {
+  display: none;
+}
+form li[has_script] > label:after {
+  font-size: 0.8em;
+  position: relative;
+  left: 1ch;
+  opacity: 0.8;
+  content: "\263C";
+}
+h1, h2, h3, h4, h5, h6 {
+  text-align: center;
+}
+.master_checkbox:after {
+  margin-left: 3ch;
+  color: var(--dim-fg);
+  font-size: 0.9rem;
+  vertical-align: top;
+  content: "(check all)";
+}
+.master_checkbox:checked:after {
+  content: "(uncheck all)";
+}
+.global_settings {
+  position: absolute;
+  right: 0;
+  top: -40px;
+  z-index: 5;
+  border: 1px solid var(--b);
+  padding: 3px 6px 3px 3px;
+  margin-right: 2px;
+  border-radius: 6px;
+}
+.proxy {
+  display: none;
+}
+hr {
+  border: none;
+  border-top: 1px solid var(--b);
+}
+label img {
+  vertical-align: top;
+}
+p {
+  margin-block: 0.7em;
+}
+footer {
+  margin-top: 3em;
+  text-align-last: right;
+}

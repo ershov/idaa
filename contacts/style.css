@@ -1,0 +1,18 @@
+/* @dark_mode Dark mode */
+@media screen {
+html {
+    -webkit-filter: invert(100%) hue-rotate(180deg) !important;
+    background-color: white;
+}
+body {
+  background: #FFF;
+}
+img, video, [style*="background-image:"] {
+    -webkit-filter: hue-rotate(-180deg) invert(100%) !important;
+}
+}
+/* @no_animations Reduce animations */
+* {
+  transition: none !important;
+  overscroll-behavior: none;
+}

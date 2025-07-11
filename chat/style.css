@@ -1,0 +1,210 @@
+
+/* @dark_mode Dark mode */
+
+@media screen {
+html {
+  -webkit-filter: invert(100%) hue-rotate(180deg) !important;
+}
+img, video, [style*="background-image:"], iframe {
+    -webkit-filter: hue-rotate(-180deg) invert(100%) !important;
+}
+}
+/* @no_animations Reduce animations */
+* {
+  transition: none !important;
+  overscroll-behavior: none;
+}
+
+/*
+google3/corp/googler_context/availability/chrome_extension/hangouts_chat/hangouts_chat_content_script.scss
+*/
+
+/*- 'Close chat' button is always visible */
+/*
+c-wiz > c-wiz {
+    display: inline-flex !important;
+}
+*/
+
+/* all-popup.js @popup Always open chats in popup <img src=chat/popout.svg> */
+
+:root {
+}
+/* all-popup.js @popup_embedded_only ... only if embedded in another site (e.g. in gmail) */
+:root {
+}
+
+/* links-new-tab.js @links_new_tab Always open linked items in new tab <img height=20 width=20 src=chat/newtab.svg> */
+
+:root {
+}
+
+/* @popout_title_height Pop-out window title height */
+
+.tRuV8b .HrE5Tb {
+  height: 24px !important;  /* @1 */
+}
+.tRuV8b .pS5UB, .vIO7af {
+  height: 24px !important; /*-Subtitle height and "..." menu */
+}
+.tRuV8b .YtEe7c, .tRuV8b .UQqRMd {
+  margin-left: 5px !important;  /*-Margin of the chat title */
+}
+.jO3HBb {     /*-Chat dialog position */
+  top: 48px;  /* @1=height+24 */
+}
+/* @popout_button_size Pop-out window control buttons height match the title bar size */
+.VcYsBe, .hA9Mmb .Yfed6d, .C0SIVb .Yfed6d {
+  height: 100% !important;
+  width: 24px !important;  /* @1=settings.popout_title_height.height */
+  margin: 0 !important;
+}
+/* Mini-window buttons stick to the right border */
+.tRuV8b .wYx9me {
+  margin-right: 0 !important;
+}
+
+/* Timestamps in contact list are always visible */
+
+.sFuxxd {
+  display: flex !important;
+}
+
+/* Contact list spaces */
+.n5yyEc {
+  margin-right: 0 !important;
+}
+.Eb3cg {
+    padding: 0 !important;
+}
+[role=listitem], [role=listitem] > * {
+  padding: 0 !important;
+}
+.JwR1Pc,
+.yDIlKc .JwR1Pc, .yDIlKc .wR3Nid, .W0hon .JwR1Pc, .W0hon .wR3Nid {
+  padding-left: 4px !important;
+}
+.t5F5nf {
+  margin-right: 0 !important;
+}
+.sFuxxd, .aBtxmc {
+  margin-left: 0 !important;
+}
+.LoYJxb {
+  height: 32px !important;
+}
+.kjWKTd {
+    font-size: .65rem !important;
+}
+.PL5Wwe, .JRtysb {
+  border-radius: 0 !important;
+}
+.V6.CL { /*--contact list headings--*/
+  height: unset !important;
+}
+/* Clearer contact list sections separator */
+.WR .Xa .X9 {
+  background: linear-gradient(180deg, #E0E0E0 0, #FFF 1rem) !important;
+}
+
+/* Compact layout */
+@media (max-width: 400px) {
+.fh7VDd, .LoYJxb { height: 24px !important; }
+.kjWKTd { display: none; }
+}
+@media (min-width: 680px) {
+.fh7VDd, .LoYJxb { height: 24px !important; }
+.kjWKTd { display: none; }
+}
+
+/* Use full page width */
+.bzJiD .jGyvbd .QIJiHb, .bzJiD .jGyvbd .zX644e {
+  max-width: unset !important;
+}
+
+/* Thinner top bar */
+[role=banner] {
+  height: 48px !important;
+}
+[role=banner] > * {
+  padding: 0 !important;
+}
+.bn iframe.bl {
+  height: calc(100vh - 48px) !important;
+}
+div.Tm#\:3 {
+  height: 100% !important;
+}
+
+/* Smaller paddings in chat dialog */
+c-wiz c-wiz [role=heading] + * {
+  padding: 0;
+  padding-top: 5px;     /* @1 */
+  padding-bottom: 0px;  /* @1 */
+}
+/*-Follow button sticks to the edge */
+.yg4pvb {
+  right: 0px;
+  top: 0px;
+}
+
+/* Thinner reply bar */
+[aria-label=Reply],
+[aria-label=Reply] *,
+[aria-label=Reply] + *,
+[aria-label=Reply] + * *,
+[aria-label="Jump to messages"] + * *  /*- this one for personal chats. another option: [aria-label^="In conversation"]... */
+{
+    min-height: 0px !important;
+    margin: auto 0 !important;
+    padding: 0 !important;
+}
+
+/* Chat spaces */
+.Bl2pUd, .jGyvbd, .YJxKBc, .NGoCob, .Hj5Fxb,
+.byY7Yb, .XganBc {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.WQKmIb .auHzcc, .WQKmIb .RPExGf, .WQKmIb .IEIJqd,
+.cFc9ae, .MiRdyc, .zX644e {
+    max-width: unset !important;
+}
+.dJ9vNe, .I0LFzc {
+    border-radius: 0 !important;
+}
+@media (max-width: 679px)
+.auHzcc, .RPExGf, .BEjUKc .cFc9ae {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Hide meaningless image for video chat invitation */
+a[aria-label="Join video meeting, Video Call."] > :first-child {
+    display: none;
+}
+
+/* Reactions are in a convenient spot */
+
+.SFMExc {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    x-start;
+}
+
+.HO0hcf {
+  right: unset !important;
+  top: -28px !important;
+  left: min(calc(100vw - 138px), 200px);  /* @3 */
+}
+div.HO0hcf::before {
+  width: 0 !important;
+}
+
+.cmEq8b .xHWT7d {
+  opacity: 1 !important;
+}
+
+/*-script.js */
+
+/*-TODO: Add "Automatic history ON" capability */

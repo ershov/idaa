@@ -1,0 +1,77 @@
+{
+  "manifest_version": 2,
+  "name": "Layout and Usability",
+  "short_name": "Layout",
+  "version": "2.0.9",
+  "icons": {
+    "128": "logo1-128.png",
+    "64":  "logo1-64.png",
+    "48":  "logo1-48.png",
+    "16":  "logo1-16.png"
+  },
+  "description": "Improve layout and usability of certain web sites.",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "browser_action": {
+     "default_popup": "options.html",
+     "default_title": "Layout Options"
+  },
+  "commands": {
+    "switch-dark-mode-current": {
+      "suggested_key": {
+        "default": "Alt+A"
+      },
+      "description": "Switch Dark Mode for the current site"
+    },
+    "switch-dark-mode-global": {
+      "description": "Switch Dark Mode for all sites"
+    },
+    "switch-ext-current": {
+      "suggested_key": {
+        "default": "Alt+L"
+      },
+      "description": "Enable/Disable the current site"
+    },
+    "switch-ext-global": {
+      "description": "Enable/Disable all sites"
+    }
+  },
+  "background": {
+    "scripts": ["gen_module_names.js", "gen_urlmap.js", "dark_mode.js", "eventpage.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+
+@{[join ",\n", map {map {qq{    "$_"}} @{$_->[1]}} @modules]}
+
+  ],
+  "optional_permissions": [
+      "http://*/",
+      "https://*/"
+  ],
+  "web_accessible_resources": [
+  ],
+  "content_scripts": [
+
+@{[
+join ",\n",
+  map { chompl(<<"_E")
+    {
+      "matches": [@{[join ", ", map {qq{"$_"}} @{$_->[1]}]}],
+      "run_at": "document_start",@{[
+        # chat and contacts want to run in inner frames too
+        $_->[0] eq 'chat' || $_->[0] eq 'contacts' ? qq{\n      "all_frames": true,} : ""
+      ]}
+      "js": ["$_->[0]/gen.js", "$_->[0]/gen_content.js", "dark_mode.js", "content.js"]
+    }
+_E
+} @modules
+]}
+
+  ]
+}

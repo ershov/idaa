@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="options.css">
+<link rel="stylesheet" href="tabs.css">
+<script src=gen_all.js></script>
+<script src=dark_mode.js></script>
+</head>
+<body>
+<h1><img src="logo1-16.png"> Layout Settings</h1>
+<ul class="tabs">
+  <div class=global_settings>
+    <input type=checkbox id="global_dark" _master _for="input[_section_id=dark_mode]"><label for=global_dark> Dark Mode</label><BR>
+    <input type=checkbox id="global_animations" checked _master _for="input[_section_id=no_animations]"><label for=global_noanimation> Reduce animation</label><BR>
+  </div>
+  <div style="padding-left:2px"><input type=checkbox id="module_enable_ext_master" class=master_checkbox _master _for="input[name=module_enable],input[name=module_enable_ext]"></div>
+
+  <script src=insert_settings.js></script>
+
+  <li class="tab">
+    <input type="radio" name="tabs" id="_about_tab" checked/>
+    <label for="_about_tab"><center>About</center></label>
+    <div class=tab-content style="left: 0px; padding: 9px 18px; width: 447px; margin-top: 19px; white-space: initial; border: 1px solid var(--b); border-radius: 0 6px 6px 0;">
+      <h3>About</h3>
+      <p>Layout and usability improvement Chrome extension for various sites.
+      <p>Pick a site on the left to configure the layout.
+      <p>"<b>Dark Mode</b>" and "<b>Reduce Animation</b>" checkboxes at the top will change the setting for all sites.
+      <p>[<b>Save</b>] button syncs the settings to the Profile that's accessible across devices. Closing the dialog also saves settings.
+      <p>[<b>Undo</b>] undoes the changes to the point when Settings were opened.
+      <p>[<b>Defaults</b>] loads defaults (everything on, smart Dark Mode).
+      <p>The extension tries to be smart about using Dark Mode and gets the default preference from System.
+      <p>Items marked with &laquo;&#x263C;&raquo; use script and may require the page refresh in order to take effect. That's automatic upon dialog close or [Save].
+      <p><b>Chat</b> and <b>Contacts</b> are widely embedded into other sites (gmail, buganizer, etc). In order to control their embedded behavior, go to their tabs.
+      <p>Use <a href="chrome://extensions/shortcuts" target=_blank>keyboard shortcuts</a> to quickly switch the dark mode or call the config window.
+      <footer>
+      <p>Author: Yury Ershov <a href="mailto:yuriy.ershov@gmail.com" target=_blank>yuriy.ershov@gmail.com</a>
+      <p>Project home: <a href="https://github.com/ershov/idaa" target=_blank>https://github.com/ershov/idaa</a>
+      </footer>
+    </div>
+  </li>
+</ul>
+<span style="position: fixed; right: 0; top: 0; background-color:#888; z-index: 10;">
+  <input type=submit id=all_apply value="Save" title="Save settings to accunt storage">
+  <input type=button id=all_load value="Undo" title="Load settings from account storage">
+  <input type=reset id=all_reset value="Defaults" title="Reset to defaults">
+  <input type=button id=all_defaults value="Defaults" style="display:none">
+</span>
+<script src=finalize_settings.js></script>
+</body>
+<html>

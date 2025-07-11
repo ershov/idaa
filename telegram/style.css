@@ -1,0 +1,28 @@
+
+/* @dark_mode Dark mode */
+
+@media screen {
+html {
+    -webkit-filter: invert(100%) hue-rotate(180deg) !important;
+    background-color: white;
+}
+img, video, [style*="background-image:"] {
+    -webkit-filter: hue-rotate(-180deg) invert(100%) !important;
+}
+}
+/* @no_animations Reduce animations */
+* {
+  transition: none !important;
+  overscroll-behavior: none;
+}
+
+
+/* @common Use full page width. */
+
+.tg_head_split,
+.im_page_wrap,
+.im_message_wrap,
+.im_send_form, .im_send_panel_wrap {
+  max-width: unset !important;
+  margin: 0 !important;
+}

@@ -1,0 +1,31 @@
+:root {
+  --bg: #FFF;
+  --fg: #000;
+  --b: #888;
+  --hov-bg: #CCE;
+  --a-bg: #337;
+  --a-fg: #FFF;
+  --dim-fg: #888;
+  --tabl-bg: #EEE;
+}
+@media (prefers-color-scheme: dark) {
+:root {
+  --bg: #222;
+  --fg: #FFF;
+  --b: #888;
+  --hov-bg: #444;
+  --a-bg: #AAA;
+  --a-fg: #000;
+  --dim-fg: #888;
+  --tabl-bg: #282828;
+}
+a:link { color: #8080FF; }
+a:visited { color: #FF80FF; }
+form img {
+  -webkit-filter: hue-rotate(-180deg) invert(100%) !important;
+}
+}
+
+* {
+  overscroll-behavior: none;
+}
