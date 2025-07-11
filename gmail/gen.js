@@ -3097,8 +3097,7 @@ header[role=banner] > div:nth-child(2) > div:nth-child(2) > div
     height: 36px !important;
 }
 /*-search bar */
-.gb_jf , .gb_kf, .gb_0d, .gb_6d,
-input[name=q] {
+.gb_jf , .gb_kf, .gb_0d, .gb_6d {
     height: 36px !important;
 }
 .gb_Bf , .gb_Cf , form#aso_search_form_anchor > div[gh=sb] {
