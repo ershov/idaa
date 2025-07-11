@@ -8463,6 +8463,9 @@ static GenStyle(settings) {
   width: 100% !important;
   margin: 0 0 !important;
 }
+* {
+  max-width: unset !important;
+}
 `;
 }
 
@@ -8507,17 +8510,180 @@ static ApplySettingsToForm(settings, form) {
 
 
 ///////////////////////////////////////////////////////////
+// Functions for remove_background_image_ : Remove background image.
+// Split: minor
+// Params: 
+
+static remove_background_image_ = class {
+
+static params = [];
+
+static SetDefaults(settings) {
+  if (!settings.hasOwnProperty('remove_background_image_')) settings.remove_background_image_ = {};
+  let s = settings.remove_background_image_;
+  s._enabled = true;
+
+}
+
+static SetMissing(settings) {
+  if (!settings.hasOwnProperty('remove_background_image_')) settings.remove_background_image_ = {};
+  let s = settings.remove_background_image_;
+  if (!s.hasOwnProperty('_enabled')) s._enabled = true;
+
+}
+
+static IsEnabled(settings) {
+  return settings.remove_background_image_._enabled;
+}
+
+static GenStyle(settings) {
+  this.SetMissing(settings);
+  let s = settings.remove_background_image_;
+  if (!this.IsEnabled(settings)) return "/* Disabled: Remove background image. */\n\n";
+  let {} = s;
+  return `
+/* Remove background image. */
+[data-asset-chat-background-dark] {
+  background-image: unset !important;
+	background-color: #000;
+}
+`;
+}
+
+static GenScriptUrls(settings) {
+  return this.IsEnabled(settings) ? [] : [];
+}
+
+static GetScript(settings) {
+  return this.IsEnabled(settings) ? ()=>{
+
+  } : ()=>{};
+}
+
+static GenSettingsUi(settings) {
+  this.SetMissing(settings);
+  let s = settings.remove_background_image_;
+  return `  <li style=height:0.5em ><BR>
+  <li>
+  <input type=checkbox name=whatsapp_remove_background_image__enabled id=whatsapp_remove_background_image__enabled _site=whatsapp _section_id="remove_background_image_" _setting_id="_enabled" ${s._enabled ? "checked" : ""}>
+  <label for=whatsapp_remove_background_image__enabled> Remove background image.</label>
+
+`;
+}
+
+static ImportSettingsFromForm(form, settings) {
+  if (!settings.hasOwnProperty('remove_background_image_')) settings.remove_background_image_ = {};
+  let s = settings.remove_background_image_;
+  let e = form.elements;
+  s._enabled = e.whatsapp_remove_background_image__enabled.checked;
+
+}
+
+static ApplySettingsToForm(settings, form) {
+  this.SetMissing(settings);
+  let s = settings.remove_background_image_;
+  let e = form.elements;
+  e.whatsapp_remove_background_image__enabled.checked = s._enabled;
+
+}
+
+};  // end of nested class remove_background_image_
+
+
+///////////////////////////////////////////////////////////
+// Functions for remove_ai_button_ : Remove AI button.
+// Split: minor
+// Params: 
+
+static remove_ai_button_ = class {
+
+static params = [];
+
+static SetDefaults(settings) {
+  if (!settings.hasOwnProperty('remove_ai_button_')) settings.remove_ai_button_ = {};
+  let s = settings.remove_ai_button_;
+  s._enabled = true;
+
+}
+
+static SetMissing(settings) {
+  if (!settings.hasOwnProperty('remove_ai_button_')) settings.remove_ai_button_ = {};
+  let s = settings.remove_ai_button_;
+  if (!s.hasOwnProperty('_enabled')) s._enabled = true;
+
+}
+
+static IsEnabled(settings) {
+  return settings.remove_ai_button_._enabled;
+}
+
+static GenStyle(settings) {
+  this.SetMissing(settings);
+  let s = settings.remove_ai_button_;
+  if (!this.IsEnabled(settings)) return "/* Disabled: Remove AI button. */\n\n";
+  let {} = s;
+  return `
+/* Remove AI button. */
+[title="Meta AI"] {
+	display: none !important;
+}
+`;
+}
+
+static GenScriptUrls(settings) {
+  return this.IsEnabled(settings) ? [] : [];
+}
+
+static GetScript(settings) {
+  return this.IsEnabled(settings) ? ()=>{
+
+  } : ()=>{};
+}
+
+static GenSettingsUi(settings) {
+  this.SetMissing(settings);
+  let s = settings.remove_ai_button_;
+  return `  <li style=height:0.5em ><BR>
+  <li>
+  <input type=checkbox name=whatsapp_remove_ai_button__enabled id=whatsapp_remove_ai_button__enabled _site=whatsapp _section_id="remove_ai_button_" _setting_id="_enabled" ${s._enabled ? "checked" : ""}>
+  <label for=whatsapp_remove_ai_button__enabled> Remove AI button.</label>
+
+`;
+}
+
+static ImportSettingsFromForm(form, settings) {
+  if (!settings.hasOwnProperty('remove_ai_button_')) settings.remove_ai_button_ = {};
+  let s = settings.remove_ai_button_;
+  let e = form.elements;
+  s._enabled = e.whatsapp_remove_ai_button__enabled.checked;
+
+}
+
+static ApplySettingsToForm(settings, form) {
+  this.SetMissing(settings);
+  let s = settings.remove_ai_button_;
+  let e = form.elements;
+  e.whatsapp_remove_ai_button__enabled.checked = s._enabled;
+
+}
+
+};  // end of nested class remove_ai_button_
+
+
+///////////////////////////////////////////////////////////
 // Interface functions
 
 static id = "whatsapp";
-static fields = ["dark_mode", "no_animations", "common"];
+static fields = ["dark_mode", "no_animations", "common", "remove_background_image_", "remove_ai_button_"];
 
 static GenStyle(settings) {
   if (settings._module_enabled === false) return "/* Module whatsapp disabled */";
   return ""+
   this.dark_mode.GenStyle(settings) +
   this.no_animations.GenStyle(settings) +
-  this.common.GenStyle(settings);
+  this.common.GenStyle(settings) +
+  this.remove_background_image_.GenStyle(settings) +
+  this.remove_ai_button_.GenStyle(settings);
 }
 
 static GenScriptUrls(settings) {
@@ -8525,7 +8691,9 @@ static GenScriptUrls(settings) {
   return [
     ...this.dark_mode.GenScriptUrls(settings),
     ...this.no_animations.GenScriptUrls(settings),
-    ...this.common.GenScriptUrls(settings)
+    ...this.common.GenScriptUrls(settings),
+    ...this.remove_background_image_.GenScriptUrls(settings),
+    ...this.remove_ai_button_.GenScriptUrls(settings)
   ];
 }
 
@@ -8534,7 +8702,9 @@ static GetScript(settings) {
   let scripts = [
     this.dark_mode.GetScript(settings),
     this.no_animations.GetScript(settings),
-    this.common.GetScript(settings)
+    this.common.GetScript(settings),
+    this.remove_background_image_.GetScript(settings),
+    this.remove_ai_button_.GetScript(settings)
   ];
   return ()=>scripts.forEach(script => {
     let ex;
@@ -8550,25 +8720,33 @@ static SetDefaults(settings) {
   this.dark_mode.SetDefaults(settings);
   this.no_animations.SetDefaults(settings);
   this.common.SetDefaults(settings);
+  this.remove_background_image_.SetDefaults(settings);
+  this.remove_ai_button_.SetDefaults(settings);
 }
 
 static GenSettingsUi(settings) {
   return ""+
   this.dark_mode.GenSettingsUi(settings) +
   this.no_animations.GenSettingsUi(settings) +
-  this.common.GenSettingsUi(settings);
+  this.common.GenSettingsUi(settings) +
+  this.remove_background_image_.GenSettingsUi(settings) +
+  this.remove_ai_button_.GenSettingsUi(settings);
 }
 
 static ImportSettingsFromForm(form, settings) {
   this.dark_mode.ImportSettingsFromForm(form, settings);
   this.no_animations.ImportSettingsFromForm(form, settings);
   this.common.ImportSettingsFromForm(form, settings);
+  this.remove_background_image_.ImportSettingsFromForm(form, settings);
+  this.remove_ai_button_.ImportSettingsFromForm(form, settings);
 }
 
 static ApplySettingsToForm(settings, form) {
   this.dark_mode.ApplySettingsToForm(settings, form);
   this.no_animations.ApplySettingsToForm(settings, form);
   this.common.ApplySettingsToForm(settings, form);
+  this.remove_background_image_.ApplySettingsToForm(settings, form);
+  this.remove_ai_button_.ApplySettingsToForm(settings, form);
 }
 
 

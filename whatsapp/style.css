@@ -26,3 +26,17 @@ img, video, [style*="background-image:"] {
   width: 100% !important;
   margin: 0 0 !important;
 }
+* {
+  max-width: unset !important;
+}
+
+/* Remove background image. */
+[data-asset-chat-background-dark] {
+  background-image: unset !important;
+	background-color: #000;
+}
+
+/* Remove AI button. */
+[title="Meta AI"] {
+	display: none !important;
+}
