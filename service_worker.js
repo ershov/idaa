@@ -1,5 +1,7 @@
 "use strict";
 
+importScripts('gen_module_names.js', 'gen_urlmap.js', 'dark_mode.js');
+
 // chrome.storage.sync.clear(()=>console.log("sync ok")); chrome.storage.local.clear(()=>console.log("local ok"));
 
 // Install and Update trigger
@@ -15,7 +17,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
         if (chrome.runtime.openOptionsPage) {
             chrome.runtime.openOptionsPage();
         } else {
-            window.open(chrome.runtime.getURL('options.html'));
+            chrome.tabs.create({url: chrome.runtime.getURL('options.html')});
         }
     }
 });
@@ -29,7 +31,8 @@ function ForAll(fn) {
     console.log("got local settings:", res.gmail_condensed);
 
     // Detect current "global" by current site OR current majority
-    chrome.tabs.getSelected(null, tab => {
+    chrome.tabs.query({active: true, currentWindow: true}, tabs => {
+      let tab = tabs[0];
       settings ||= {};
       let module = Url2Mod(tab.url);
       if (!fn(settings, module)) return;
@@ -58,7 +61,8 @@ function SwitchGlobalState(settings, module, modPeekFn) {
 
 // fn(modsettings, module) -> modified: bool
 function ForCurrent(fn) {
-  return () => chrome.tabs.getSelected(null, tab => {
+  return () => chrome.tabs.query({active: true, currentWindow: true}, tabs => {
+    let tab = tabs[0];
     let module = Url2Mod(tab.url);
     if (!module) {
       console.log("Unknown site");

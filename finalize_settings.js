@@ -209,8 +209,11 @@ var port = chrome?.runtime?.connect({});
 
 // Select the tab for the current site
 
-chrome?.tabs?.getSelected(null, tab => {
-  let module = Url2Mod(tab.url);
-  if (module) window[`${module}_tab`]?.click();
+chrome?.tabs?.query({active: true, currentWindow: true}, tabs => {
+  let tab = tabs[0];
+  if (tab) {
+    let module = Url2Mod(tab.url);
+    if (module) window[`${module}_tab`]?.click();
+  }
 });
 
