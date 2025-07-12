@@ -4,6 +4,7 @@
 # Top-level comment: section title
 #     file.js sets script
 #     @id sets id
+#     #disabled anywhere in the comment disables the feature by default
 #
 # Comment after '{' sets section subtitle
 #
@@ -37,6 +38,7 @@ my $prev_isempty = 1;
 my $prev_istitle = 0;
 my $isempty = 0;
 my $istitle = 0;
+my $enabled = "true";
 my $title = "";
 my $title_id = "";
 my $has_scripts = 0;
@@ -124,7 +126,7 @@ static params = [@{[join ", ", map {qq{"$_->[0]"}} @params]}];
 static SetDefaults(settings) {
   if (!settings.hasOwnProperty('$title_id')) settings.$title_id = {};
   let s = settings.$title_id;
-  s._enabled = true;
+  s._enabled = $enabled;
 @{[join "\n", map {
 "  s.$_->[0] = $_->[2];"
   } @params]}
@@ -133,7 +135,7 @@ static SetDefaults(settings) {
 static SetMissing(settings) {
   if (!settings.hasOwnProperty('$title_id')) settings.$title_id = {};
   let s = settings.$title_id;
-  if (!s.hasOwnProperty('_enabled')) s._enabled = true;
+  if (!s.hasOwnProperty('_enabled')) s._enabled = $enabled;
 @{[join "\n", map {
 "  if (!s.hasOwnProperty('$_->[0]')) s.$_->[0] = $_->[2];"
   } @params]}
@@ -335,6 +337,7 @@ while (defined($_ = $F->getline())) {
         $istitle = 1;
         DoSection();
         $title = strip $1;
+        $enabled = !($title =~ s/\s*+\#disabled\s*+//) ? "true" : "false";
         $script = ($title =~ s/^(\S+?\.js)\s*// ? $1 : "");
         $title_id = DescrToVarName($title =~ s/^@(\w++)\s*// ? $1 : $title);
         $script_txt = ReadScript $script;
