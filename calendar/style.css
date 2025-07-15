@@ -1,20 +1,17 @@
 /* @dark_mode Dark mode */
+
 @media screen {
 html {
     -webkit-filter: invert(100%) hue-rotate(180deg) !important;
     background-color: white;
 }
-body {
-  background: #FFF;
-}
-img, video, [style*="background-image:"] {
+img, video, [style*="background-image:"], :fullscreen {
     -webkit-filter: hue-rotate(-180deg) invert(100%) !important;
 }
 }
 /* @no_animations Reduce animations */
 * {
   transition: none !important;
-  overscroll-behavior: none;
 }
 
 /* @no_overflow Display full strings */
@@ -22,3 +19,8 @@ img, video, [style*="background-image:"] {
 * {
   text-overflow: unset !important;
 }
+[data-hovercard-owner-id] * {
+  max-width: unset !important;
+}
+
+/* show-menu-hotkey.js @menu_hotkey Show/hide menu hotkey (Backtick or Ctrl-Backtick) */

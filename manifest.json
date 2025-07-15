@@ -47,16 +47,19 @@
     "storage"
   ],
   "host_permissions": [
+    "*://calendar.google.com/*",
     "*://mail.google.com/chat/*",
     "*://chat.google.com/*",
     "*://mail.google.com/sharing/*",
     "*://contacts.google.com/*",
+    "https://github.com/*",
     "*://mail.google.com/mail/*",
     "*://groups.google.com/*",
     "*://instagram.com/*",
     "*://www.instagram.com/*",
     "*://jamboard.google.com/*",
     "*://keep.google.com/*",
+    "*://app.slack.com/*",
     "*://web.telegram.org/*",
     "*://web.whatsapp.com/*"
   ],
@@ -69,6 +72,11 @@
   "content_scripts": [
 
     {
+      "matches": ["*://calendar.google.com/*"],
+      "run_at": "document_start",
+      "js": ["calendar/gen.js", "calendar/gen_content.js", "dark_mode.js", "content.js"]
+    },
+    {
       "matches": ["*://mail.google.com/chat/*", "*://chat.google.com/*", "*://mail.google.com/sharing/*"],
       "run_at": "document_start",
       "all_frames": true,
@@ -79,6 +87,11 @@
       "run_at": "document_start",
       "all_frames": true,
       "js": ["contacts/gen.js", "contacts/gen_content.js", "dark_mode.js", "content.js"]
+    },
+    {
+      "matches": ["https://github.com/*"],
+      "run_at": "document_start",
+      "js": ["github/gen.js", "github/gen_content.js", "dark_mode.js", "content.js"]
     },
     {
       "matches": ["*://mail.google.com/mail/*"],
@@ -104,6 +117,11 @@
       "matches": ["*://keep.google.com/*"],
       "run_at": "document_start",
       "js": ["keep/gen.js", "keep/gen_content.js", "dark_mode.js", "content.js"]
+    },
+    {
+      "matches": ["*://app.slack.com/*"],
+      "run_at": "document_start",
+      "js": ["slack/gen.js", "slack/gen_content.js", "dark_mode.js", "content.js"]
     },
     {
       "matches": ["*://web.telegram.org/*"],

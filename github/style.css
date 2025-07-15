@@ -1,0 +1,44 @@
+/* @dark_mode Dark mode */
+
+@media screen {
+html {
+    -webkit-filter: invert(100%) hue-rotate(180deg) !important;
+    background-color: white;
+}
+img:not([src^="images/"]):not([src^="//ssl.gstatic.com/ui/"]):not([src^="https://docs.google.com/"]), video, [style*="background-image:"], iframe {
+    -webkit-filter: hue-rotate(-180deg) invert(100%) !important;
+}
+}
+/* @no_animations Reduce animations */
+* {
+  transition: none !important;
+  overscroll-behavior: none;
+}
+
+/* Underline links */
+
+a, a.no-underline {
+    text-decoration: underline !important;
+}
+
+/* Wider menus */
+
+.select-menu-list {
+    max-height: 800px !important;
+}
+.select-menu-modal {
+    width: 600px !important;
+}
+.select-menu-item .css-truncate-overflow {
+    max-width: 450px !important;
+}
+
+/* always-ignore-whitespace-diff.js @ignore_ws Ignore whitespace in diffs by default */
+
+/* auto-expand-more-matches.js @auto_expand_matches Auto expand more matches */
+
+/* load-all-diffs.js @load_diffs Load all diffs with one button */
+
+/* next-prev-comment-keynav.js @comments_nav Keyboard navigation to next/prev comment: Alt+Meta+{Up/Down} */
+
+/* comment-highlight.js @comments_hi Highlight comments by Alt+Click */

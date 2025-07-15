@@ -8,6 +8,8 @@ var urlmap = [
   ["*://mail.google.com/chat/*", "chat"],
   ["*://mail.google.com/mail/*", "gmail"],
   ["*://mail.google.com/sharing/*", "chat"],
+  ["*://app.slack.com/*", "slack"],
+  ["*://calendar.google.com/*", "calendar"],
   ["*://chat.google.com/*", "chat"],
   ["*://contacts.google.com/*", "contacts"],
   ["*://groups.google.com/*", "groups"],
@@ -16,11 +18,12 @@ var urlmap = [
   ["*://web.telegram.org/*", "telegram"],
   ["*://web.whatsapp.com/*", "whatsapp"],
   ["*://www.instagram.com/*", "instagram"],
-  ["*://instagram.com/*", "instagram"]];
+  ["*://instagram.com/*", "instagram"],
+  ["https://github.com/*", "github"]];
 
 function Url2Mod(url) {
-  const mods = ["chat", "gmail", "chat", "chat", "contacts", "groups", "jamboard", "keep", "telegram", "whatsapp", "instagram", "instagram"];
-  const re = new RegExp(`^(.*?://mail\.google\.com/chat/.*?)|(.*?://mail\.google\.com/mail/.*?)|(.*?://mail\.google\.com/sharing/.*?)|(.*?://chat\.google\.com/.*?)|(.*?://contacts\.google\.com/.*?)|(.*?://groups\.google\.com/.*?)|(.*?://jamboard\.google\.com/.*?)|(.*?://keep\.google\.com/.*?)|(.*?://web\.telegram\.org/.*?)|(.*?://web\.whatsapp\.com/.*?)|(.*?://www\.instagram\.com/.*?)|(.*?://instagram\.com/.*?)$`);
+  const mods = ["chat", "gmail", "chat", "slack", "calendar", "chat", "contacts", "groups", "jamboard", "keep", "telegram", "whatsapp", "instagram", "instagram", "github"];
+  const re = new RegExp(`^(.*?://mail\.google\.com/chat/.*?)|(.*?://mail\.google\.com/mail/.*?)|(.*?://mail\.google\.com/sharing/.*?)|(.*?://app\.slack\.com/.*?)|(.*?://calendar\.google\.com/.*?)|(.*?://chat\.google\.com/.*?)|(.*?://contacts\.google\.com/.*?)|(.*?://groups\.google\.com/.*?)|(.*?://jamboard\.google\.com/.*?)|(.*?://keep\.google\.com/.*?)|(.*?://web\.telegram\.org/.*?)|(.*?://web\.whatsapp\.com/.*?)|(.*?://www\.instagram\.com/.*?)|(.*?://instagram\.com/.*?)|(https://github\.com/.*?)$`);
   let match = url.match(re);
   return match ? mods[[...match].splice(1).findIndex(x => !!x)] : null;
 }

@@ -5,13 +5,16 @@
 //
 
 var modules_map = {
+  "calendar": calendar,
   "chat": chat,
   "contacts": contacts,
+  "github": github,
   "gmail": gmail,
   "groups": groups,
   "instagram": instagram,
   "jamboard": jamboard,
   "keep": keep,
+  "slack": slack,
   "telegram": telegram,
   "whatsapp": whatsapp,
 };

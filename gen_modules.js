@@ -5,13 +5,16 @@
 //
 
 var modules = [
+  calendar,
   chat,
   contacts,
+  github,
   gmail,
   groups,
   instagram,
   jamboard,
   keep,
+  slack,
   telegram,
   whatsapp,
 ];

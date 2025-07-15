@@ -3267,35 +3267,115 @@ static ApplySettingsToForm(settings, form) {
 
 
 ///////////////////////////////////////////////////////////
-// Functions for print_view_cleanup_button : Print view cleanup button
-// Split: big
+// Functions for reduce_side_panel_when_it_s_collapsed : Reduce side panel when it's collapsed
+// Split: minor
 // Params: 
 
-static print_view_cleanup_button = class {
+static reduce_side_panel_when_it_s_collapsed = class {
 
 static params = [];
 
 static SetDefaults(settings) {
-  if (!settings.hasOwnProperty('print_view_cleanup_button')) settings.print_view_cleanup_button = {};
-  let s = settings.print_view_cleanup_button;
+  if (!settings.hasOwnProperty('reduce_side_panel_when_it_s_collapsed')) settings.reduce_side_panel_when_it_s_collapsed = {};
+  let s = settings.reduce_side_panel_when_it_s_collapsed;
   s._enabled = true;
 
 }
 
 static SetMissing(settings) {
-  if (!settings.hasOwnProperty('print_view_cleanup_button')) settings.print_view_cleanup_button = {};
-  let s = settings.print_view_cleanup_button;
+  if (!settings.hasOwnProperty('reduce_side_panel_when_it_s_collapsed')) settings.reduce_side_panel_when_it_s_collapsed = {};
+  let s = settings.reduce_side_panel_when_it_s_collapsed;
   if (!s.hasOwnProperty('_enabled')) s._enabled = true;
 
 }
 
 static IsEnabled(settings) {
-  return settings.print_view_cleanup_button._enabled;
+  return settings.reduce_side_panel_when_it_s_collapsed._enabled;
 }
 
 static GenStyle(settings) {
   this.SetMissing(settings);
-  let s = settings.print_view_cleanup_button;
+  let s = settings.reduce_side_panel_when_it_s_collapsed;
+  if (!this.IsEnabled(settings)) return "/* Disabled: Reduce side panel when it's collapsed */\n\n";
+  let {} = s;
+  return `
+/* Reduce side panel when it's collapsed */
+.bAw.it {
+    min-width: unset !important;
+}
+`;
+}
+
+static GenScriptUrls(settings) {
+  return this.IsEnabled(settings) ? [] : [];
+}
+
+static GetScript(settings) {
+  return this.IsEnabled(settings) ? ()=>{
+
+  } : ()=>{};
+}
+
+static GenSettingsUi(settings) {
+  this.SetMissing(settings);
+  let s = settings.reduce_side_panel_when_it_s_collapsed;
+  return `  <li style=height:0.5em ><BR>
+  <li>
+  <input type=checkbox name=gmail_reduce_side_panel_when_it_s_collapsed_enabled id=gmail_reduce_side_panel_when_it_s_collapsed_enabled _site=gmail _section_id="reduce_side_panel_when_it_s_collapsed" _setting_id="_enabled" ${s._enabled ? "checked" : ""}>
+  <label for=gmail_reduce_side_panel_when_it_s_collapsed_enabled> Reduce side panel when it's collapsed</label>
+
+`;
+}
+
+static ImportSettingsFromForm(form, settings) {
+  if (!settings.hasOwnProperty('reduce_side_panel_when_it_s_collapsed')) settings.reduce_side_panel_when_it_s_collapsed = {};
+  let s = settings.reduce_side_panel_when_it_s_collapsed;
+  let e = form.elements;
+  s._enabled = e.gmail_reduce_side_panel_when_it_s_collapsed_enabled.checked;
+
+}
+
+static ApplySettingsToForm(settings, form) {
+  this.SetMissing(settings);
+  let s = settings.reduce_side_panel_when_it_s_collapsed;
+  let e = form.elements;
+  e.gmail_reduce_side_panel_when_it_s_collapsed_enabled.checked = s._enabled;
+
+}
+
+};  // end of nested class reduce_side_panel_when_it_s_collapsed
+
+
+///////////////////////////////////////////////////////////
+// Functions for print_cleanup : Print view cleanup button
+// Split: big
+// Params: 
+
+static print_cleanup = class {
+
+static params = [];
+
+static SetDefaults(settings) {
+  if (!settings.hasOwnProperty('print_cleanup')) settings.print_cleanup = {};
+  let s = settings.print_cleanup;
+  s._enabled = true;
+
+}
+
+static SetMissing(settings) {
+  if (!settings.hasOwnProperty('print_cleanup')) settings.print_cleanup = {};
+  let s = settings.print_cleanup;
+  if (!s.hasOwnProperty('_enabled')) s._enabled = true;
+
+}
+
+static IsEnabled(settings) {
+  return settings.print_cleanup._enabled;
+}
+
+static GenStyle(settings) {
+  this.SetMissing(settings);
+  let s = settings.print_cleanup;
   if (!this.IsEnabled(settings)) return "/* Disabled: Print view cleanup button */\n\n";
   let {} = s;
   return `
@@ -3357,39 +3437,144 @@ div[data-smartmail="gmail_signature"],
 
 static GenSettingsUi(settings) {
   this.SetMissing(settings);
-  let s = settings.print_view_cleanup_button;
+  let s = settings.print_cleanup;
   return `  <li><hr>
   <li has_script>
-  <input type=checkbox name=gmail_print_view_cleanup_button_enabled id=gmail_print_view_cleanup_button_enabled _site=gmail _section_id="print_view_cleanup_button" _setting_id="_enabled" ${s._enabled ? "checked" : ""}>
-  <label for=gmail_print_view_cleanup_button_enabled> Print view cleanup button</label>
+  <input type=checkbox name=gmail_print_cleanup_enabled id=gmail_print_cleanup_enabled _site=gmail _section_id="print_cleanup" _setting_id="_enabled" ${s._enabled ? "checked" : ""}>
+  <label for=gmail_print_cleanup_enabled> Print view cleanup button</label>
 
 `;
 }
 
 static ImportSettingsFromForm(form, settings) {
-  if (!settings.hasOwnProperty('print_view_cleanup_button')) settings.print_view_cleanup_button = {};
-  let s = settings.print_view_cleanup_button;
+  if (!settings.hasOwnProperty('print_cleanup')) settings.print_cleanup = {};
+  let s = settings.print_cleanup;
   let e = form.elements;
-  s._enabled = e.gmail_print_view_cleanup_button_enabled.checked;
+  s._enabled = e.gmail_print_cleanup_enabled.checked;
 
 }
 
 static ApplySettingsToForm(settings, form) {
   this.SetMissing(settings);
-  let s = settings.print_view_cleanup_button;
+  let s = settings.print_cleanup;
   let e = form.elements;
-  e.gmail_print_view_cleanup_button_enabled.checked = s._enabled;
+  e.gmail_print_cleanup_enabled.checked = s._enabled;
 
 }
 
-};  // end of nested class print_view_cleanup_button
+};  // end of nested class print_cleanup
+
+
+///////////////////////////////////////////////////////////
+// Functions for color_msglist : Color message list by recency
+// Split: big
+// Params: 
+
+static color_msglist = class {
+
+static params = [];
+
+static SetDefaults(settings) {
+  if (!settings.hasOwnProperty('color_msglist')) settings.color_msglist = {};
+  let s = settings.color_msglist;
+  s._enabled = false;
+
+}
+
+static SetMissing(settings) {
+  if (!settings.hasOwnProperty('color_msglist')) settings.color_msglist = {};
+  let s = settings.color_msglist;
+  if (!s.hasOwnProperty('_enabled')) s._enabled = false;
+
+}
+
+static IsEnabled(settings) {
+  return settings.color_msglist._enabled;
+}
+
+static GenStyle(settings) {
+  this.SetMissing(settings);
+  let s = settings.color_msglist;
+  if (!this.IsEnabled(settings)) return "/* Disabled: Color message list by recency */\n\n";
+  let {} = s;
+  return `
+/* Color message list by recency */
+
+`;
+}
+
+static GenScriptUrls(settings) {
+  return this.IsEnabled(settings) ? ["color_by_recency.js"] : [];
+}
+
+static GetScript(settings) {
+  return this.IsEnabled(settings) ? ()=>{
+let isFocused = true;
+let savedElement;
+
+function colorRows() {
+    if (!isFocused) return;
+    let now = new Date();
+    [...document.querySelectorAll(`table[aria-readonly="true"] tr[role="row"] td[role="gridcell"] :is(span[aria-label^="Sun, "],span[aria-label^="Mon, "],span[aria-label^="Tue, "],span[aria-label^="Wed, "],span[aria-label^="Thu, "],span[aria-label^="Fri, "],span[aria-label^="Sat, "])`)].forEach(e => {
+        let d = (now - new Date(e.title))/24/3600/1000;
+        let a = 0.3/(d/7+1);
+        e.closest(`tr`).style.background = `hsla(${300 - d * 90 / 7}, 100% , ${Math.max(0, 50 - d/21*50)}%, ${a})`;
+        savedElement = e;
+        let ee = e.querySelector("span");
+        if (ee && ee.innerHTML.match(/^\d/)) {
+            ee.innerText = e.title;
+        }
+    });
+}
+function periodicUpdateColors() {
+    if (!isFocused || (savedElement?.isConnected && savedElement?.offsetHeight)) return;
+    colorRows();
+}
+
+setInterval(periodicUpdateColors, 2000);
+
+document.addEventListener("click", ()=>setTimeout(colorRows, 500));
+window.addEventListener("focus", ()=>{isFocused=true; colorRows();});
+window.addEventListener("blur", ()=>isFocused=false);
+
+  } : ()=>{};
+}
+
+static GenSettingsUi(settings) {
+  this.SetMissing(settings);
+  let s = settings.color_msglist;
+  return `  <li><hr>
+  <li has_script>
+  <input type=checkbox name=gmail_color_msglist_enabled id=gmail_color_msglist_enabled _site=gmail _section_id="color_msglist" _setting_id="_enabled" ${s._enabled ? "checked" : ""}>
+  <label for=gmail_color_msglist_enabled> Color message list by recency</label>
+
+`;
+}
+
+static ImportSettingsFromForm(form, settings) {
+  if (!settings.hasOwnProperty('color_msglist')) settings.color_msglist = {};
+  let s = settings.color_msglist;
+  let e = form.elements;
+  s._enabled = e.gmail_color_msglist_enabled.checked;
+
+}
+
+static ApplySettingsToForm(settings, form) {
+  this.SetMissing(settings);
+  let s = settings.color_msglist;
+  let e = form.elements;
+  e.gmail_color_msglist_enabled.checked = s._enabled;
+
+}
+
+};  // end of nested class color_msglist
 
 
 ///////////////////////////////////////////////////////////
 // Interface functions
 
 static id = "gmail";
-static fields = ["dark_mode", "no_animations", "list_of_emails", "horizontal_cell_paddings_in_grid_cells", "spacing_between_emails_in_thread_view", "labels_in_emails_list", "smaller_font_for_labels_in_emails_list", "limit_the_width_of_labels_in_emails_list", "extra_width_for_special_labels_in_emails_list", "shrink_general_labels_in_emails_list__like_inbox", "sections_splitter", "multiple_inbox_sections", "fix_too_large_hitboxes_for_email_selection_marks", "highlight_focused_hovered_line", "labels_tree", "nav_labels", "nav_labels_collapsed", "compose_button", "hide_huge_blue__search_refinement__buttons", "area_right_to_the_compose_button_and_above_the_list_of_emails", "subject_bar_when_reading_email", "email_reply_text_area__add_border", "reply_form_uses_full_width", "in_page_compose_window_header", "absolutely_empty_space_above_chat", "padding_on_the_right_of_the_chat", "compact_chat_contact_list", "clearer_chat_contact_list_sections_separator", "top_bar", "buttons_look_active_and_clickable__exclude_label_tags_", "print_view_cleanup_button"];
+static fields = ["dark_mode", "no_animations", "list_of_emails", "horizontal_cell_paddings_in_grid_cells", "spacing_between_emails_in_thread_view", "labels_in_emails_list", "smaller_font_for_labels_in_emails_list", "limit_the_width_of_labels_in_emails_list", "extra_width_for_special_labels_in_emails_list", "shrink_general_labels_in_emails_list__like_inbox", "sections_splitter", "multiple_inbox_sections", "fix_too_large_hitboxes_for_email_selection_marks", "highlight_focused_hovered_line", "labels_tree", "nav_labels", "nav_labels_collapsed", "compose_button", "hide_huge_blue__search_refinement__buttons", "area_right_to_the_compose_button_and_above_the_list_of_emails", "subject_bar_when_reading_email", "email_reply_text_area__add_border", "reply_form_uses_full_width", "in_page_compose_window_header", "absolutely_empty_space_above_chat", "padding_on_the_right_of_the_chat", "compact_chat_contact_list", "clearer_chat_contact_list_sections_separator", "top_bar", "buttons_look_active_and_clickable__exclude_label_tags_", "reduce_side_panel_when_it_s_collapsed", "print_cleanup", "color_msglist"];
 
 static GenStyle(settings) {
   if (settings._module_enabled === false) return "/* Module gmail disabled */";
@@ -3424,7 +3609,9 @@ static GenStyle(settings) {
   this.clearer_chat_contact_list_sections_separator.GenStyle(settings) +
   this.top_bar.GenStyle(settings) +
   this.buttons_look_active_and_clickable__exclude_label_tags_.GenStyle(settings) +
-  this.print_view_cleanup_button.GenStyle(settings);
+  this.reduce_side_panel_when_it_s_collapsed.GenStyle(settings) +
+  this.print_cleanup.GenStyle(settings) +
+  this.color_msglist.GenStyle(settings);
 }
 
 static GenScriptUrls(settings) {
@@ -3460,7 +3647,9 @@ static GenScriptUrls(settings) {
     ...this.clearer_chat_contact_list_sections_separator.GenScriptUrls(settings),
     ...this.top_bar.GenScriptUrls(settings),
     ...this.buttons_look_active_and_clickable__exclude_label_tags_.GenScriptUrls(settings),
-    ...this.print_view_cleanup_button.GenScriptUrls(settings)
+    ...this.reduce_side_panel_when_it_s_collapsed.GenScriptUrls(settings),
+    ...this.print_cleanup.GenScriptUrls(settings),
+    ...this.color_msglist.GenScriptUrls(settings)
   ];
 }
 
@@ -3497,7 +3686,9 @@ static GetScript(settings) {
     this.clearer_chat_contact_list_sections_separator.GetScript(settings),
     this.top_bar.GetScript(settings),
     this.buttons_look_active_and_clickable__exclude_label_tags_.GetScript(settings),
-    this.print_view_cleanup_button.GetScript(settings)
+    this.reduce_side_panel_when_it_s_collapsed.GetScript(settings),
+    this.print_cleanup.GetScript(settings),
+    this.color_msglist.GetScript(settings)
   ];
   return ()=>scripts.forEach(script => {
     let ex;
@@ -3540,7 +3731,9 @@ static SetDefaults(settings) {
   this.clearer_chat_contact_list_sections_separator.SetDefaults(settings);
   this.top_bar.SetDefaults(settings);
   this.buttons_look_active_and_clickable__exclude_label_tags_.SetDefaults(settings);
-  this.print_view_cleanup_button.SetDefaults(settings);
+  this.reduce_side_panel_when_it_s_collapsed.SetDefaults(settings);
+  this.print_cleanup.SetDefaults(settings);
+  this.color_msglist.SetDefaults(settings);
 }
 
 static GenSettingsUi(settings) {
@@ -3575,7 +3768,9 @@ static GenSettingsUi(settings) {
   this.clearer_chat_contact_list_sections_separator.GenSettingsUi(settings) +
   this.top_bar.GenSettingsUi(settings) +
   this.buttons_look_active_and_clickable__exclude_label_tags_.GenSettingsUi(settings) +
-  this.print_view_cleanup_button.GenSettingsUi(settings);
+  this.reduce_side_panel_when_it_s_collapsed.GenSettingsUi(settings) +
+  this.print_cleanup.GenSettingsUi(settings) +
+  this.color_msglist.GenSettingsUi(settings);
 }
 
 static ImportSettingsFromForm(form, settings) {
@@ -3609,7 +3804,9 @@ static ImportSettingsFromForm(form, settings) {
   this.clearer_chat_contact_list_sections_separator.ImportSettingsFromForm(form, settings);
   this.top_bar.ImportSettingsFromForm(form, settings);
   this.buttons_look_active_and_clickable__exclude_label_tags_.ImportSettingsFromForm(form, settings);
-  this.print_view_cleanup_button.ImportSettingsFromForm(form, settings);
+  this.reduce_side_panel_when_it_s_collapsed.ImportSettingsFromForm(form, settings);
+  this.print_cleanup.ImportSettingsFromForm(form, settings);
+  this.color_msglist.ImportSettingsFromForm(form, settings);
 }
 
 static ApplySettingsToForm(settings, form) {
@@ -3643,7 +3840,9 @@ static ApplySettingsToForm(settings, form) {
   this.clearer_chat_contact_list_sections_separator.ApplySettingsToForm(settings, form);
   this.top_bar.ApplySettingsToForm(settings, form);
   this.buttons_look_active_and_clickable__exclude_label_tags_.ApplySettingsToForm(settings, form);
-  this.print_view_cleanup_button.ApplySettingsToForm(settings, form);
+  this.reduce_side_panel_when_it_s_collapsed.ApplySettingsToForm(settings, form);
+  this.print_cleanup.ApplySettingsToForm(settings, form);
+  this.color_msglist.ApplySettingsToForm(settings, form);
 }
 
 

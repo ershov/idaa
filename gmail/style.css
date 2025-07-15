@@ -350,7 +350,13 @@ div[role=button]:not(.hN) {
     box-shadow: 0 0 1px 0px #808080 !important;
 }
 
-/* print_cleanup.js Print view cleanup button */
+/* Reduce side panel when it's collapsed */
+.bAw.it {
+    min-width: unset !important;
+}
 
+/* print_cleanup.js @print_cleanup Print view cleanup button */
+
+/* color_by_recency.js @color_msglist Color message list by recency #disabled */
 
 /* highlight elements: %s/}/;box-shadow: inset 0 0 20px cyan;}/ */
