@@ -3512,29 +3512,25 @@ static GetScript(settings) {
 let isFocused = true;
 let savedElement;
 
-function colorRows() {
+function doUpdate() {
     if (!isFocused) return;
     let now = new Date();
     [...document.querySelectorAll(`table[aria-readonly="true"] tr[role="row"] td[role="gridcell"] :is(span[aria-label^="Sun, "],span[aria-label^="Mon, "],span[aria-label^="Tue, "],span[aria-label^="Wed, "],span[aria-label^="Thu, "],span[aria-label^="Fri, "],span[aria-label^="Sat, "])`)].forEach(e => {
+        savedElement = e;
         let d = (now - new Date(e.title))/24/3600/1000;
         let a = 0.3/(d/7+1);
         e.closest(`tr`).style.background = `hsla(${300 - d * 90 / 7}, 100% , ${Math.max(0, 50 - d/21*50)}%, ${a})`;
-        savedElement = e;
-        let ee = e.querySelector("span");
-        if (ee && ee.innerHTML.match(/^\d/)) {
-            ee.innerText = e.title;
-        }
     });
 }
-function periodicUpdateColors() {
+function periodicUpdate() {
     if (!isFocused || (savedElement?.isConnected && savedElement?.offsetHeight)) return;
-    colorRows();
+    doUpdate();
 }
 
-setInterval(periodicUpdateColors, 2000);
+setInterval(periodicUpdate, 2000);
 
-document.addEventListener("click", ()=>setTimeout(colorRows, 500));
-window.addEventListener("focus", ()=>{isFocused=true; colorRows();});
+document.addEventListener("click", ()=>setTimeout(doUpdate, 150));
+window.addEventListener("focus", ()=>{isFocused=true; doUpdate();});
 window.addEventListener("blur", ()=>isFocused=false);
 
   } : ()=>{};
@@ -3571,10 +3567,111 @@ static ApplySettingsToForm(settings, form) {
 
 
 ///////////////////////////////////////////////////////////
+// Functions for full_dates : Display full date and time
+// Split: big
+// Params: 
+
+static full_dates = class {
+
+static params = [];
+
+static SetDefaults(settings) {
+  if (!settings.hasOwnProperty('full_dates')) settings.full_dates = {};
+  let s = settings.full_dates;
+  s._enabled = false;
+
+}
+
+static SetMissing(settings) {
+  if (!settings.hasOwnProperty('full_dates')) settings.full_dates = {};
+  let s = settings.full_dates;
+  if (!s.hasOwnProperty('_enabled')) s._enabled = false;
+
+}
+
+static IsEnabled(settings) {
+  return settings.full_dates._enabled;
+}
+
+static GenStyle(settings) {
+  this.SetMissing(settings);
+  let s = settings.full_dates;
+  if (!this.IsEnabled(settings)) return "/* Disabled: Display full date and time */\n\n";
+  let {} = s;
+  return `
+/* Display full date and time */
+
+`;
+}
+
+static GenScriptUrls(settings) {
+  return this.IsEnabled(settings) ? ["full_dates.js"] : [];
+}
+
+static GetScript(settings) {
+  return this.IsEnabled(settings) ? ()=>{
+let isFocused = true;
+let savedElement;
+
+function doUpdate() {
+    if (!isFocused) return;
+    [...document.querySelectorAll(`table[aria-readonly="true"] tr[role="row"] td[role="gridcell"] :is(span[aria-label^="Sun, "],span[aria-label^="Mon, "],span[aria-label^="Tue, "],span[aria-label^="Wed, "],span[aria-label^="Thu, "],span[aria-label^="Fri, "],span[aria-label^="Sat, "])`)].forEach(e => {
+        savedElement = e;
+        let ee = e.querySelector("span");
+        if (ee && ee.innerHTML.match(/^\d/)) {
+            ee.innerText = e.title;
+        }
+    });
+}
+    function periodicUpdate() {
+    if (!isFocused || (savedElement?.isConnected && savedElement?.offsetHeight)) return;
+    doUpdate();
+}
+
+setInterval(periodicUpdate, 2000);
+
+document.addEventListener("click", ()=>setTimeout(doUpdate, 150));
+window.addEventListener("focus", ()=>{isFocused=true; doUpdate();});
+window.addEventListener("blur", ()=>isFocused=false);
+
+  } : ()=>{};
+}
+
+static GenSettingsUi(settings) {
+  this.SetMissing(settings);
+  let s = settings.full_dates;
+  return `  <li><hr>
+  <li has_script>
+  <input type=checkbox name=gmail_full_dates_enabled id=gmail_full_dates_enabled _site=gmail _section_id="full_dates" _setting_id="_enabled" ${s._enabled ? "checked" : ""}>
+  <label for=gmail_full_dates_enabled> Display full date and time</label>
+
+`;
+}
+
+static ImportSettingsFromForm(form, settings) {
+  if (!settings.hasOwnProperty('full_dates')) settings.full_dates = {};
+  let s = settings.full_dates;
+  let e = form.elements;
+  s._enabled = e.gmail_full_dates_enabled.checked;
+
+}
+
+static ApplySettingsToForm(settings, form) {
+  this.SetMissing(settings);
+  let s = settings.full_dates;
+  let e = form.elements;
+  e.gmail_full_dates_enabled.checked = s._enabled;
+
+}
+
+};  // end of nested class full_dates
+
+
+///////////////////////////////////////////////////////////
 // Interface functions
 
 static id = "gmail";
-static fields = ["dark_mode", "no_animations", "list_of_emails", "horizontal_cell_paddings_in_grid_cells", "spacing_between_emails_in_thread_view", "labels_in_emails_list", "smaller_font_for_labels_in_emails_list", "limit_the_width_of_labels_in_emails_list", "extra_width_for_special_labels_in_emails_list", "shrink_general_labels_in_emails_list__like_inbox", "sections_splitter", "multiple_inbox_sections", "fix_too_large_hitboxes_for_email_selection_marks", "highlight_focused_hovered_line", "labels_tree", "nav_labels", "nav_labels_collapsed", "compose_button", "hide_huge_blue__search_refinement__buttons", "area_right_to_the_compose_button_and_above_the_list_of_emails", "subject_bar_when_reading_email", "email_reply_text_area__add_border", "reply_form_uses_full_width", "in_page_compose_window_header", "absolutely_empty_space_above_chat", "padding_on_the_right_of_the_chat", "compact_chat_contact_list", "clearer_chat_contact_list_sections_separator", "top_bar", "buttons_look_active_and_clickable__exclude_label_tags_", "reduce_side_panel_when_it_s_collapsed", "print_cleanup", "color_msglist"];
+static fields = ["dark_mode", "no_animations", "list_of_emails", "horizontal_cell_paddings_in_grid_cells", "spacing_between_emails_in_thread_view", "labels_in_emails_list", "smaller_font_for_labels_in_emails_list", "limit_the_width_of_labels_in_emails_list", "extra_width_for_special_labels_in_emails_list", "shrink_general_labels_in_emails_list__like_inbox", "sections_splitter", "multiple_inbox_sections", "fix_too_large_hitboxes_for_email_selection_marks", "highlight_focused_hovered_line", "labels_tree", "nav_labels", "nav_labels_collapsed", "compose_button", "hide_huge_blue__search_refinement__buttons", "area_right_to_the_compose_button_and_above_the_list_of_emails", "subject_bar_when_reading_email", "email_reply_text_area__add_border", "reply_form_uses_full_width", "in_page_compose_window_header", "absolutely_empty_space_above_chat", "padding_on_the_right_of_the_chat", "compact_chat_contact_list", "clearer_chat_contact_list_sections_separator", "top_bar", "buttons_look_active_and_clickable__exclude_label_tags_", "reduce_side_panel_when_it_s_collapsed", "print_cleanup", "color_msglist", "full_dates"];
 
 static GenStyle(settings) {
   if (settings._module_enabled === false) return "/* Module gmail disabled */";
@@ -3611,7 +3708,8 @@ static GenStyle(settings) {
   this.buttons_look_active_and_clickable__exclude_label_tags_.GenStyle(settings) +
   this.reduce_side_panel_when_it_s_collapsed.GenStyle(settings) +
   this.print_cleanup.GenStyle(settings) +
-  this.color_msglist.GenStyle(settings);
+  this.color_msglist.GenStyle(settings) +
+  this.full_dates.GenStyle(settings);
 }
 
 static GenScriptUrls(settings) {
@@ -3649,7 +3747,8 @@ static GenScriptUrls(settings) {
     ...this.buttons_look_active_and_clickable__exclude_label_tags_.GenScriptUrls(settings),
     ...this.reduce_side_panel_when_it_s_collapsed.GenScriptUrls(settings),
     ...this.print_cleanup.GenScriptUrls(settings),
-    ...this.color_msglist.GenScriptUrls(settings)
+    ...this.color_msglist.GenScriptUrls(settings),
+    ...this.full_dates.GenScriptUrls(settings)
   ];
 }
 
@@ -3688,7 +3787,8 @@ static GetScript(settings) {
     this.buttons_look_active_and_clickable__exclude_label_tags_.GetScript(settings),
     this.reduce_side_panel_when_it_s_collapsed.GetScript(settings),
     this.print_cleanup.GetScript(settings),
-    this.color_msglist.GetScript(settings)
+    this.color_msglist.GetScript(settings),
+    this.full_dates.GetScript(settings)
   ];
   return ()=>scripts.forEach(script => {
     let ex;
@@ -3734,6 +3834,7 @@ static SetDefaults(settings) {
   this.reduce_side_panel_when_it_s_collapsed.SetDefaults(settings);
   this.print_cleanup.SetDefaults(settings);
   this.color_msglist.SetDefaults(settings);
+  this.full_dates.SetDefaults(settings);
 }
 
 static GenSettingsUi(settings) {
@@ -3770,7 +3871,8 @@ static GenSettingsUi(settings) {
   this.buttons_look_active_and_clickable__exclude_label_tags_.GenSettingsUi(settings) +
   this.reduce_side_panel_when_it_s_collapsed.GenSettingsUi(settings) +
   this.print_cleanup.GenSettingsUi(settings) +
-  this.color_msglist.GenSettingsUi(settings);
+  this.color_msglist.GenSettingsUi(settings) +
+  this.full_dates.GenSettingsUi(settings);
 }
 
 static ImportSettingsFromForm(form, settings) {
@@ -3807,6 +3909,7 @@ static ImportSettingsFromForm(form, settings) {
   this.reduce_side_panel_when_it_s_collapsed.ImportSettingsFromForm(form, settings);
   this.print_cleanup.ImportSettingsFromForm(form, settings);
   this.color_msglist.ImportSettingsFromForm(form, settings);
+  this.full_dates.ImportSettingsFromForm(form, settings);
 }
 
 static ApplySettingsToForm(settings, form) {
@@ -3843,6 +3946,7 @@ static ApplySettingsToForm(settings, form) {
   this.reduce_side_panel_when_it_s_collapsed.ApplySettingsToForm(settings, form);
   this.print_cleanup.ApplySettingsToForm(settings, form);
   this.color_msglist.ApplySettingsToForm(settings, form);
+  this.full_dates.ApplySettingsToForm(settings, form);
 }
 
 
