@@ -10,6 +10,7 @@ var module_names = [
   "contacts",
   "github",
   "gmail",
+  "gmail_condensed",
   "groups",
   "instagram",
   "jamboard",

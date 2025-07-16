@@ -17,14 +17,14 @@ static params = [];
 static SetDefaults(settings) {
   if (!settings.hasOwnProperty('dark_mode')) settings.dark_mode = {};
   let s = settings.dark_mode;
-  s._enabled = true;
+  s._enabled = false;
 
 }
 
 static SetMissing(settings) {
   if (!settings.hasOwnProperty('dark_mode')) settings.dark_mode = {};
   let s = settings.dark_mode;
-  if (!s.hasOwnProperty('_enabled')) s._enabled = true;
+  if (!s.hasOwnProperty('_enabled')) s._enabled = false;
 
 }
 

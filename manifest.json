@@ -52,7 +52,8 @@
     "*://chat.google.com/*",
     "*://mail.google.com/sharing/*",
     "*://contacts.google.com/*",
-    "https://github.com/*",
+    "*://github.com/*",
+    "*://mail.google.com/mail/*",
     "*://mail.google.com/mail/*",
     "*://groups.google.com/*",
     "*://instagram.com/*",
@@ -74,64 +75,69 @@
     {
       "matches": ["*://calendar.google.com/*"],
       "run_at": "document_start",
-      "js": ["calendar/gen.js", "calendar/gen_content.js", "dark_mode.js", "content.js"]
+      "js": ["dark_mode.js", "content.js", "calendar/gen.js", "calendar/gen_content.js"]
     },
     {
       "matches": ["*://mail.google.com/chat/*", "*://chat.google.com/*", "*://mail.google.com/sharing/*"],
       "run_at": "document_start",
       "all_frames": true,
-      "js": ["chat/gen.js", "chat/gen_content.js", "dark_mode.js", "content.js"]
+      "js": ["dark_mode.js", "content.js", "chat/gen.js", "chat/gen_content.js"]
     },
     {
       "matches": ["*://contacts.google.com/*"],
       "run_at": "document_start",
       "all_frames": true,
-      "js": ["contacts/gen.js", "contacts/gen_content.js", "dark_mode.js", "content.js"]
+      "js": ["dark_mode.js", "content.js", "contacts/gen.js", "contacts/gen_content.js"]
     },
     {
-      "matches": ["https://github.com/*"],
+      "matches": ["*://github.com/*"],
       "run_at": "document_start",
-      "js": ["github/gen.js", "github/gen_content.js", "dark_mode.js", "content.js"]
+      "js": ["dark_mode.js", "content.js", "github/gen.js", "github/gen_content.js"]
     },
     {
       "matches": ["*://mail.google.com/mail/*"],
       "run_at": "document_start",
-      "js": ["gmail/gen.js", "gmail/gen_content.js", "dark_mode.js", "content.js"]
+      "js": ["dark_mode.js", "content.js", "gmail/gen.js", "gmail/gen_content.js"]
+    },
+    {
+      "matches": ["*://mail.google.com/mail/*"],
+      "run_at": "document_start",
+      "js": ["dark_mode.js", "content.js", "gmail_condensed/gen.js", "gmail_condensed/gen_content.js"]
     },
     {
       "matches": ["*://groups.google.com/*"],
       "run_at": "document_start",
-      "js": ["groups/gen.js", "groups/gen_content.js", "dark_mode.js", "content.js"]
+      "js": ["dark_mode.js", "content.js", "groups/gen.js", "groups/gen_content.js"]
     },
     {
       "matches": ["*://instagram.com/*", "*://www.instagram.com/*"],
       "run_at": "document_start",
-      "js": ["instagram/gen.js", "instagram/gen_content.js", "dark_mode.js", "content.js"]
+      "js": ["dark_mode.js", "content.js", "instagram/gen.js", "instagram/gen_content.js"]
     },
     {
       "matches": ["*://jamboard.google.com/*"],
       "run_at": "document_start",
-      "js": ["jamboard/gen.js", "jamboard/gen_content.js", "dark_mode.js", "content.js"]
+      "js": ["dark_mode.js", "content.js", "jamboard/gen.js", "jamboard/gen_content.js"]
     },
     {
       "matches": ["*://keep.google.com/*"],
       "run_at": "document_start",
-      "js": ["keep/gen.js", "keep/gen_content.js", "dark_mode.js", "content.js"]
+      "js": ["dark_mode.js", "content.js", "keep/gen.js", "keep/gen_content.js"]
     },
     {
       "matches": ["*://app.slack.com/*"],
       "run_at": "document_start",
-      "js": ["slack/gen.js", "slack/gen_content.js", "dark_mode.js", "content.js"]
+      "js": ["dark_mode.js", "content.js", "slack/gen.js", "slack/gen_content.js"]
     },
     {
       "matches": ["*://web.telegram.org/*"],
       "run_at": "document_start",
-      "js": ["telegram/gen.js", "telegram/gen_content.js", "dark_mode.js", "content.js"]
+      "js": ["dark_mode.js", "content.js", "telegram/gen.js", "telegram/gen_content.js"]
     },
     {
       "matches": ["*://web.whatsapp.com/*"],
       "run_at": "document_start",
-      "js": ["whatsapp/gen.js", "whatsapp/gen_content.js", "dark_mode.js", "content.js"]
+      "js": ["dark_mode.js", "content.js", "whatsapp/gen.js", "whatsapp/gen_content.js"]
     }
 
   ]

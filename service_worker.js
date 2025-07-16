@@ -26,22 +26,23 @@ chrome.runtime.onInstalled.addListener(function (details) {
 
 // fn(settings, module) -> modified: bool
 function ForAll(fn) {
-  return () => chrome.storage.local.get( ["gmail_condensed"], res => {
-    let settings = res.gmail_condensed;
-    console.log("got local settings:", res.gmail_condensed);
+  return () => chrome.storage.local.get( ["idaa_settings"], res => {
+    let settings = res.idaa_settings;
+    console.log("got local settings:", res.idaa_settings);
 
     // Detect current "global" by current site OR current majority
     chrome.tabs.query({active: true, currentWindow: true}, tabs => {
       let tab = tabs[0];
       settings ||= {};
-      let module = Url2Mod(tab.url);
-      if (!fn(settings, module)) return;
+      // let module = Url2Mod(tab.url);
+      // if (!fn(settings, module)) return;
+      if (!Url2Mods(tab.url).filter(module => fn(settings, module)).length) return;
 
       chrome.storage.local.set(
-          {gmail_condensed: settings, who: -1},
+          {idaa_settings: settings, who: -1},
           ()=>console.log("saved local"));
       chrome.storage.sync.set(
-          {gmail_condensed: settings, who: -1},
+          {idaa_settings: settings, who: -1},
           ()=>console.log("saved sync"));
       changed = false;
     });
@@ -63,23 +64,29 @@ function SwitchGlobalState(settings, module, modPeekFn) {
 function ForCurrent(fn) {
   return () => chrome.tabs.query({active: true, currentWindow: true}, tabs => {
     let tab = tabs[0];
-    let module = Url2Mod(tab.url);
-    if (!module) {
+    // let module = Url2Mod(tab.url);
+    // if (!module) {
+    //   console.log("Unknown site");
+    //   return;
+    // }
+    let modules = [...Url2Mod(tab.url)];
+    if (!modules.length) {
       console.log("Unknown site");
       return;
     }
-    chrome.storage.local.get( ["gmail_condensed"], res => {
-      let settings = res.gmail_condensed;
-      console.log("got local settings:", res.gmail_condensed);
+    chrome.storage.local.get( ["idaa_settings"], res => {
+      let settings = res.idaa_settings;
+      console.log("got local settings:", res.idaa_settings);
       settings ||= {};
-      settings[module] ||= {}
-      if (!fn(settings[module], module)) return;
+      for (let module of modules) settings[module] ||= {};
+      // if (!fn(settings[module], module)) return;
+      if (!modules.filter(module => fn(settings[module], module)).length) return;
 
       chrome.storage.local.set(
-          {gmail_condensed: settings, who: -1},
+          {idaa_settings: settings, who: -1},
           ()=>console.log("saved local"));
       chrome.storage.sync.set(
-          {gmail_condensed: settings, who: -1},
+          {idaa_settings: settings, who: -1},
           ()=>console.log("saved sync"));
       changed = false;
     });
@@ -131,7 +138,7 @@ var changed = false;
 var port_id = 0;
 
 chrome.storage.onChanged.addListener((ch, st) => {
-  if (!ch.gmail_condensed) return;
+  if (!ch.idaa_settings) return;
   changed = true;
 });
 
@@ -145,10 +152,10 @@ chrome.runtime.onConnect.addListener(function(port) {
 
         if (!changed) return;
         console.log("Transfering settings from local to sync");
-        chrome.storage.local.get( ["gmail_condensed"], res => {
-          console.log("got local settings:", res.gmail_condensed);
+        chrome.storage.local.get( ["idaa_settings"], res => {
+          console.log("got local settings:", res.idaa_settings);
           chrome.storage.sync.set(
-              {gmail_condensed: res.gmail_condensed, who: -1},
+              {idaa_settings: res.idaa_settings, who: -1},
               ()=>console.log("saved sync"));
           changed = false;
         });

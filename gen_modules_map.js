@@ -10,6 +10,7 @@ var modules_map = {
   "contacts": contacts,
   "github": github,
   "gmail": gmail,
+  "gmail_condensed": gmail_condensed,
   "groups": groups,
   "instagram": instagram,
   "jamboard": jamboard,

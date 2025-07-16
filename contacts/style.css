@@ -1,4 +1,4 @@
-/* @dark_mode Dark mode */
+/* @dark_mode Dark mode #disabled */
 @media screen {
 html {
     -webkit-filter: invert(100%) hue-rotate(180deg) !important;

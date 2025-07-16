@@ -2,18 +2,24 @@
 
 //console.log("content", document.readyState);
 
-window.modsettings = {};
-module.SetDefaults(window.modsettings);
-ApplyThemeToModule(window.modsettings, PrefersDark(), true);
+function LoadModule(module) {
+
+console.log("Load Module", module.name);
+
+let modsettings = {};
+if (!window.settings) window.settings = {};
+window.settings[module.name] = modsettings;
+module.SetDefaults(modsettings);
+ApplyThemeToModule(modsettings, PrefersDark(), true);
 
 function DoStyle() {
-  document.head.querySelector("style#gmail_condensed")?.remove();
+  document.head.querySelector(`style#idaa_style__${module.name}`)?.remove();
   document.head.insertAdjacentHTML("beforeend",
-      `<style id=gmail_condensed _module=${module.name}>`+module.GenStyle(window.modsettings)+"</style>");
+      `<style id=idaa_style__${module.name} _module=${module.name}>`+module.GenStyle(modsettings)+"</style>");
   //console.log("Style applied");
 }
 
-var cur_script_id = "";
+let cur_script_id = "";
 
 function Exec(script) {
   document.readyState === "complete" ? setTimeout(script, 1) : window.addEventListener("load", script, {once: true});
@@ -21,14 +27,14 @@ function Exec(script) {
 
 function DoScript(reload) {
   if (!module.has_scripts) return;
-  let scripts = module.GenScriptUrls(window.modsettings);
+  let scripts = module.GenScriptUrls(modsettings);
   let new_script_id = scripts.join(":");
   //console.log(cur_script_id, "->", new_script_id);
   if (new_script_id === cur_script_id) { /*console.log("No script change");*/ return; }
   if (cur_script_id == "") {
     // First time applied script
     //console.log("Schedule script...");
-    Exec(module.GetScript(window.modsettings));
+    Exec(module.GetScript(modsettings));
     cur_script_id = new_script_id;
   } else {
     // script changed: can't override existing script
@@ -54,12 +60,13 @@ class SettingsSource {
 
 if (chrome.storage) {
   let GetSettingsFromStorage = (storage, prio, do_script) => {
-    storage.get(["gmail_condensed"], res => {
-      //console.log(prio, "get settings:", res.gmail_condensed, "last source:", SettingsSource.from);
+    storage.get(["idaa_settings"], res => {
+      //console.log(prio, "get settings:", res.idaa_settings, "last source:", SettingsSource.from);
       if (SettingsSource.from >= prio) return;  // Already applied a higher priority one
       SettingsSource.from = prio;
-      if (res.gmail_condensed) {
-        Object.assign(window.modsettings, res.gmail_condensed[module.name] || {});
+      if (res.idaa_settings) {
+        Object.assign(modsettings, res.idaa_settings[module.name] || {});
+        window.settings[module.name] = modsettings;
       }
       DoStyle();
       do_script && DoScript(false);
@@ -70,13 +77,15 @@ if (chrome.storage) {
   GetSettingsFromStorage(chrome.storage.sync, SettingsSource.SYNC, true);
 
   let OnChange = (ch, st, reload) => {
-    if (!ch.gmail_condensed) return;  // No changes to our settings
+    if (!ch.idaa_settings) return;  // No changes to our settings
     SettingsSource.from = SettingsSource.LOCAL;
-    //console.log("Changes at ", st, " : ", ch.gmail_condensed.newValue, "last source:", SettingsSource.from);
-    Object.assign(window.modsettings, ch.gmail_condensed.newValue[module.name] || {});
+    //console.log("Changes at ", st, " : ", ch.idaa_settings.newValue, "last source:", SettingsSource.from);
+    Object.assign(modsettings, ch.idaa_settings.newValue[module.name] || {});
+    window.settings[module.name] = modsettings;
     DoStyleAndScript(reload);
   };
   chrome.storage.local.onChanged.addListener((ch, st) => OnChange(ch, st, false));
   chrome.storage.sync.onChanged.addListener((ch, st) => OnChange(ch, st, true));
 }
 
+}

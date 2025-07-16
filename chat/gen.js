@@ -17,14 +17,14 @@ static params = [];
 static SetDefaults(settings) {
   if (!settings.hasOwnProperty('dark_mode')) settings.dark_mode = {};
   let s = settings.dark_mode;
-  s._enabled = true;
+  s._enabled = false;
 
 }
 
 static SetMissing(settings) {
   if (!settings.hasOwnProperty('dark_mode')) settings.dark_mode = {};
   let s = settings.dark_mode;
-  if (!s.hasOwnProperty('_enabled')) s._enabled = true;
+  if (!s.hasOwnProperty('_enabled')) s._enabled = false;
 
 }
 
@@ -248,7 +248,7 @@ function InstallClickHandler() {
 
 function WantToStop() {
   if (top == window) return false;
-  if (window.modsettings.popup_embedded_only._enabled && IsEmbeddedInChat()) {
+  if (window.settings["chat"].popup_embedded_only._enabled && IsEmbeddedInChat()) {
     //console.log("STOP", window);
     UninstallAll();
     return true;
@@ -320,7 +320,7 @@ function InstallObserver() {
 }
 
 function Run() {
-  if (!window.all_popup_installed && window.modsettings.popup._enabled) {
+  if (!window.all_popup_installed && window.settings["chat"].popup._enabled) {
     window.all_popup_installed = true;
 
     // Always load in top window
@@ -336,7 +336,7 @@ function Run() {
     }
 
     // If using pop-out everywhere
-    if (!window.modsettings.popup_embedded_only._enabled) {
+    if (!window.settings["chat"].popup_embedded_only._enabled) {
       InstallObserver();
       return;
     }
@@ -461,7 +461,7 @@ function InstallClickHandler() {
 
 function WantToStop() {
   if (top == window) return false;
-  if (window.modsettings.popup_embedded_only._enabled && IsEmbeddedInChat()) {
+  if (window.settings["chat"].popup_embedded_only._enabled && IsEmbeddedInChat()) {
     //console.log("STOP", window);
     UninstallAll();
     return true;
@@ -533,7 +533,7 @@ function InstallObserver() {
 }
 
 function Run() {
-  if (!window.all_popup_installed && window.modsettings.popup._enabled) {
+  if (!window.all_popup_installed && window.settings["chat"].popup._enabled) {
     window.all_popup_installed = true;
 
     // Always load in top window
@@ -549,7 +549,7 @@ function Run() {
     }
 
     // If using pop-out everywhere
-    if (!window.modsettings.popup_embedded_only._enabled) {
+    if (!window.settings["chat"].popup_embedded_only._enabled) {
       InstallObserver();
       return;
     }

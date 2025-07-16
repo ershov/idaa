@@ -1,5 +1,5 @@
 
-/* @dark_mode Dark mode */
+/* @dark_mode Dark mode #disabled */
 
 @media screen {
 html {
@@ -9,6 +9,9 @@ html {
 img:not([src^="images/"]):not([src^="//ssl.gstatic.com/ui/"]):not([src^="https://docs.google.com/"]), video, [style*="background-image:"], iframe {
     -webkit-filter: hue-rotate(-180deg) invert(100%) !important;
 }
+input[autocomplete=off] {
+    color: #888 !important;
+}
 }
 /* @no_animations Reduce animations */
 * {
@@ -16,153 +19,10 @@ img:not([src^="images/"]):not([src^="//ssl.gstatic.com/ui/"]):not([src^="https:/
   overscroll-behavior: none;
 }
 
-/* List of emails */
-
-.zA {
-    padding-top: 0px !important;      /* @1 */
-    padding-bottom: 0px !important;   /* @1 */
-    overflow: hidden;
-}
-/* Horizontal cell paddings in grid cells */
-table[role=grid] td {
-    padding: 0 !important;
-}
-
-/* Spacing between emails in thread view */
-.hx .gs {
-    padding: 0 0 10px 0 !important;   /* @3 @pBot Padding After */
-}
-.aju {
-    height: 44px !important;          /* @1 @h */
-    padding: 0 6px 0 0 !important;    /* Padding after the user icon */
-}
-.gE {
-    padding: 5px 0 0 0 !important;    /* @1 @pTop Padding Before */
-}
-
-/* Labels in emails list */
-
-.ar {
-    margin-right: 1px !important;     /* @1 Horizontal spacing */
-}
-/* Smaller font for labels in emails list */
-.ar {
-    font-size: 70% !important;       /* @1 Font size % */
-    height: 16px !important;
-}
-/* Limit the width of labels in emails list */
-tr:not(:hover) td div.ar > div.at > .au > .av
-{
-    max-width: 70px !important;       /* @1 */
-}
-div.ar > div.at > .au > .av
-{
-    padding: 0 3px !important;        /* @2 */
-}
-/* Extra width for special labels in emails list  */
-.aRK:before {
-    content: none !important;
-}
-/* Shrink general labels in emails list, like Inbox  */
-tr:not(:hover) td div.ar > div.at[title='Vault "Indef"'] > .au > .av,
-tr:not(:hover) td div.ar > div.at[title='Inbox'] > .au > .av,
-tr:not(:hover) td div.ar > div.at[title='automatically-processed'] > .au > .av
-{
-    max-width: 21px !important;       /* @1 */
-    padding: 0 1px !important;        /* @2 */
-}
-
-/* Sections splitter */
-
-.Wg {
-    height: 26px !important;          /* @1 */
-}
-/* Multiple inbox sections */
-.nK .byN { /* row */
-    height: 29px !important;          /* @1 */
-    background-color: rgba(128, 128, 128, 0.1);
-}
-.Cq .nJ.A2 { /* title */
-    padding-bottom: 4px !important;   /* @1 */
-    padding-top: 4px !important;      /* @1 */
-    height: 16px !important;          /* @1 */
-    padding-left: 80px !important; /* @1 Label shift towards the middle */
-}
-.Cr .yj { /* right button */
-    padding-bottom: 2px !important;   /* @1 */
-    padding-top: 2px !important;      /* @1 */
-    height: 15px !important;          /* @1 */
-    line-height: 15px !important;     /* @1 */
-}
-.Di>.amH { /* "1-50 of ..." */
-    height: 100% !important;
-}
-
-/* Fix too large hitboxes for email selection marks */
-
-.xY>.T-Jo::before {
-    content: '';
-    display: block;
-    opacity: 0;
-    position: absolute;
-    transition-duration: 0s !important;
-    z-index: -1;
-    bottom: 0px !important;
-    left: 0px !important;
-    right: 0px !important;
-    top: 0px !important;
-    background: none;
-    border-radius: 50%;
-    box-sizing: border-box;
-    transform: scale(0);
-    transition-property: '';
-    bottom: 0px !important;
-    left: 0px !important;
-    right: 0px !important;
-    top: 0px !important;
-}
-
-.T-Jo::before {
-    content: '' !important;
-    display: block;
-    opacity: 0;
-    position: absolute;
-    transition-duration: 0s !important;
-    z-index: -1;
-    bottom: 0px !important;
-    left: 0px !important;
-    right: 0px !important;
-    top: 0px !important;
-    background: none;
-    border-radius: 50%;
-    box-sizing: border-box;
-    transform: scale(0);
-    transition-property: '';
-}
-
-.xY>.T-Jo::after, .xY>.T-Jo-Jp::after {
-    height: 0px !important;
-    width: 0px !important;
-}
-
-.T-Jo::after {
-    content: "";
-    height: 100% !important;
-    position: static !important;
-    top: 0px !important;
-    left: 0px !important;
-    width: 100% !important;
-}
-
 /* Highlight focused/hovered line */
+
 .zA:hover, .zA:focus {
     box-shadow: inset 0 0 10px 0px #808080;
-}
-
-/* Labels tree */
-.TN {
-    height: 18px !important;        /* @1 */
-    overflow: hidden;
 }
 
 /* @nav_labels Labels nav width 240 -> 200 */
@@ -201,22 +61,6 @@ div.aeN.bhZ.bym {
 div[role='toolbar'][aria-label='search refinement'] {
   display:none;
 }
-/* Area right to the compose button and above the list of emails */
-.G-atb {
-    height: 26px !important;          /* @1 */
-    overflow: hidden;
-}
-/*-Absolutely empty invisible hren hiding buttons */
-header[role=banner] > :nth-child(3) {
-    display:none;
-}
-
-/* Subject bar when reading email */
-.if>.byY, .iC .byY {
-    padding-top: 8px !important;      /* @1 */
-    padding-bottom: 0px !important;   /* @1 */
-    padding-left: 10px !important;    /* @1 */
-}
 
 /* Email reply text area: add border */
 .qz {
@@ -238,104 +82,9 @@ table.IG {
     padding: 0px 6px !important;    /* @2=padding */
 }
 
-/* In-page compose window header */
-.Hp {
-  margin-left: 6px;
-  padding: 0 !important;
-  padding-top: 0 !important;       /* @1 @padding */
-  padding-bottom: 0 !important;    /* @1=padding */
-}
-.Hm {
-  padding: 0 !important;
-}
-
-/* Absolutely empty space above chat */
-.akj {
-    margin-top: 10px !important;
-}
-/* Padding on the right of the chat */
-div.aCl div.akj {
-    padding-right: 0px !important;
-}
-/* Compact chat contact list */
-.V6.CL { /*--contact list headings--*/
-  height: unset !important;
-}
 /* Clearer chat contact list sections separator */
 .WR .Xa .X9 {
   background: linear-gradient(180deg, #E0E0E0 0, #FFF 1rem) !important;
-}
-
-/* @top_bar Top bar width, height, paddings */
-
-/*-Top bar paddings */
-.gb_Va:not(.gb_Wa) .gb_Ld ,
-.gb_Va:not(.gb_Wa) .gb_Md {
-    padding: 0px !important;
-}
-
-/*-Top bar height */
-.gb_Dc , .gb_Ec , .gb_Mc , [data-ogsr-up] {
-    height: 34px !important;
-}
-header[role=banner] > div {
-    padding: 0px !important;
-}
-div.gb_ce {
-    height: 36px !important;
-}
-header[role=banner] > div:nth-child(2) > div:first-child ,
-header[role=banner] > div:nth-child(2) > div:nth-child(2) ,
-header[role=banner] > div:nth-child(2) > div:nth-child(2) > div
-{
-    height: 36px !important;
-}
-/*-search bar */
-.gb_jf , .gb_kf, .gb_0d, .gb_6d {
-    height: 36px !important;
-}
-.gb_Bf , .gb_Cf , form#aso_search_form_anchor > div[gh=sb] {
-    height: 32px !important;
-}
-form#aso_search_form_anchor > div[gh=sb] > table[role=presentation] > tbody > tr {
-    height: 0px !important;
-}
-form#aso_search_form_anchor > div[gh=sb] > table[role=presentation] table td {
-    padding: 0px !important;
-}
-/*-Parent td of input[name=q] */
-td.gsib_a {
-    vertical-align: top !important;
-}
-/*-search bar icons and buttons */
-.gb_1e button svg, .gb_1e button img,
-.gb_2e button svg, .gb_2e button img,
-form#aso_search_form_anchor button svg, form#aso_search_form_anchor button img
-{
-    padding: 2px !important;
-    margin: 2px !important;
-}
-/*-top bar right icons */
-.gb_Pe {
-    background: inherit !important;
-    background-color: inherit !important;
-}
-/*-Smaller sandwitch menu button */
-.gb_ic , .gb_jc , .gb_pc , div[aria-label="Main menu"] {
-    -webkit-border-radius: 25% !important;
-    border-radius: 25% !important;
-    padding: 4px !important;
-}
-
-/*-Top bar, account access */
-div.gb_Va.gb_Mg.gb_R,
-div.gb_Va.gb_Pg.gb_R {
-    max-height: 41px !important;
-    margin-top: -8px !important;
-}
-/*-Account dropdown */
-div.gb_aa {
-    top: 36px !important;
 }
 
 /* Highlight one email body */

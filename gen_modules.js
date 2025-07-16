@@ -10,6 +10,7 @@ var modules = [
   contacts,
   github,
   gmail,
+  gmail_condensed,
   groups,
   instagram,
   jamboard,

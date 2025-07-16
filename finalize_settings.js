@@ -7,14 +7,14 @@ var me = Math.floor(Math.random()*1000000000);
 function SaveSync() {
   //console.log("Save settings sync");
   chrome?.storage?.sync?.set(
-    {gmail_condensed: window.settings, who: ++me},
+    {idaa_settings: window.settings, who: ++me},
     ()=>console.log("saved sync"));
 }
 
 function SaveLocal() {
   //console.log("Save settings local", new Error().stack, window.settings);
   chrome?.storage?.local?.set(
-    {gmail_condensed: window.settings, who: ++me},
+    {idaa_settings: window.settings, who: ++me},
     ()=>console.log("saved local"));
 }
 
@@ -163,20 +163,20 @@ function ApplySettingsToAllForms(settings) {
   FixAllMasters();
 }
 
-chrome?.storage?.sync.get( ["gmail_condensed"], res => {
-  console.log("get settings:", res.gmail_condensed);
-  if (!res.gmail_condensed) return;
-  ApplySettingsToAllForms(Object.assign(window.settings, res.gmail_condensed));
+chrome?.storage?.sync.get( ["idaa_settings"], res => {
+  console.log("get settings:", res.idaa_settings);
+  if (!res.idaa_settings) return;
+  ApplySettingsToAllForms(Object.assign(window.settings, res.idaa_settings));
 });
 
 chrome?.storage?.onChanged.addListener((ch, st) => {
-  if (!ch.gmail_condensed) return;
+  if (!ch.idaa_settings) return;
   if (ch.who && ch.who.newValue == me) {
     console.log("Ignore changes by myself");
     return;
   }
-  console.log("Changes at", st, " : ", ch.gmail_condensed.newValue);
-  ApplySettingsToAllForms(Object.assign(window.settings, ch.gmail_condensed.newValue));
+  console.log("Changes at", st, " : ", ch.idaa_settings.newValue);
+  ApplySettingsToAllForms(Object.assign(window.settings, ch.idaa_settings.newValue));
 });
 
 all_apply.addEventListener("click", SaveSync);
@@ -195,10 +195,10 @@ all_reset.addEventListener("click", () => {
 });
 
 all_load.addEventListener("click", function () {
-  chrome?.storage?.sync.get( ["gmail_condensed"], res => {
-    console.log("get settings:", res.gmail_condensed);
-    if (!res.gmail_condensed) return;
-    ApplySettingsToAllForms(Object.assign(window.settings, res.gmail_condensed));
+  chrome?.storage?.sync.get( ["idaa_settings"], res => {
+    console.log("get settings:", res.idaa_settings);
+    if (!res.idaa_settings) return;
+    ApplySettingsToAllForms(Object.assign(window.settings, res.idaa_settings));
     SaveLocal();
   });
 });

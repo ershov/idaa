@@ -23,7 +23,7 @@ for subdir in *; do
     cd "$subdir" || exit
     [[ -f "style.css" ]] || exit
     echo "Processing $subdir..."
-    autogen "var module = $subdir;" > gen_content.js
+    autogen "LoadModule($subdir);" > gen_content.js
     autogen > gen.js
     ../cvt-style.pl "$subdir" >> gen.js
     echo "  $subdir," >> ../gen_modules.js
@@ -36,45 +36,54 @@ echo "];" >> gen_modules.js
 echo "];" >> gen_module_names.js
 echo "};" >> gen_modules_map.js
 
+URLS_TXT=$(for f in *; do [[ -f "$f/url.txt" ]] && echo "$f/url.txt"; done) # Properly sorted list of url.txt
+
 ### Urls-to-module decoder
 
 echo Urls-to-module decoder...
 autogen > gen_urlmap.js
 
-perl -MIO::File -MFile::Basename=dirname -E '
+LC_ALL=C perl -MIO::File -MFile::Basename=dirname -E '
+@url2mod =
+ sort { (($b->[0] =~ tr{/.}{/.}) <=> ($a->[0] =~ tr{/.}{/.})) || ($a->[1] cmp $b->[1]) || ($a->[0] cmp $b->[0]) }
+ map {
+   $f = $_;
+   map {
+     chomp;
+     [$_, dirname($f)]
+   } IO::File->new($f, "r")->getlines()
+ } @ARGV;
+
 print "var urlmap = [\n";
 print join ",\n",
  map {qq{  ["$_->[0]", "$_->[1]"]}}
- sort { (($b->[0] =~ tr{/.}{/.}) <=> ($a->[0] =~ tr{/.}{/.})) || ($a->[0] cmp $b->[0]) }
- map {
-   $f = $_;
-   map {
-     chomp;
-     [$_, dirname($f)]
-   } IO::File->new($f, "r")->getlines()
- } @ARGV;
+ @url2mod;
 print "];\n\n";
-
-@url2mod =
- sort { (($b->[0] =~ tr{/.}{/.}) <=> ($a->[0] =~ tr{/.}{/.})) || ($a->[0] cmp $b->[0]) }
- map {
-   $f = $_;
-   map {
-     chomp;
-     [$_, dirname($f)]
-   } IO::File->new($f, "r")->getlines()
- } @ARGV;
 
 print << "_E";
 function Url2Mod(url) {
   const mods = [@{[join ", ", map {qq{"$_->[1]"}} @url2mod]}];
-  const re = new RegExp(`^@{[join "|", map {$_=$_->[0]; s/([.])/\\$1/g; s/\*/.*?/g; "($_)"} @url2mod]}\$`);
+  const re = new RegExp(`^@{[join "|", map {local $_=$_->[0]; s/([.])/\\$1/g; s/\*/.*?/g; "($_)"} @url2mod]}\$`);
   let match = url.match(re);
   return match ? mods[[...match].splice(1).findIndex(x => !!x)] : null;
 }
 
 _E
-' */url.txt >> gen_urlmap.js
+
+print << "_E";
+function Url2Mods(url) {
+  const mods = [@{[join ", ", map {qq{"$_->[1]"}} @url2mod]}];
+  const regs = [@{[join ", ", map { local $_=$_->[0]; s/([.])/\\$1/g; s/\*/.*?/g; qq{new RegExp("`$_")} } @url2mod]}];
+  let ret = new Set();
+  for (let i = 0; i < regs.length; i++) {
+    if (url.match(regs[i]))
+      ret.add(mods[i]);
+  }
+  return ret;
+}
+
+_E
+' $URLS_TXT >> gen_urlmap.js
 
 ### Generate manifest
 
@@ -95,7 +104,7 @@ print << "_END_MANIFEST";
 _END_MANIFEST
 _E
 print STDERR $@ if $@;
-' */url.txt > manifest.json
+' $URLS_TXT > manifest.json
 
 ### Generate combined js
 

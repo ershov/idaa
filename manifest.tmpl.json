@@ -66,7 +66,7 @@ join ",\n",
         # chat and contacts want to run in inner frames too
         $_->[0] eq 'chat' || $_->[0] eq 'contacts' ? qq{\n      "all_frames": true,} : ""
       ]}
-      "js": ["$_->[0]/gen.js", "$_->[0]/gen_content.js", "dark_mode.js", "content.js"]
+      "js": ["dark_mode.js", "content.js", "$_->[0]/gen.js", "$_->[0]/gen_content.js"]
     }
 _E
 } @modules
